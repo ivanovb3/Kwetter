@@ -1,0 +1,29 @@
+@startuml blogging_context
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Container.puml
+
+AddElementTag("v1.1", $fontColor="#d73027")
+
+LAYOUT_WITH_LEGEND()
+
+Person(user, "User", "Regular user who uses the social platform")
+Person(admin, "Administrator", "Resposible for managing user's roles and accounts")
+Person(moderator, "Moderator", "User responsible for protecting application's regulations")
+
+Container(frontend, "Web Application", "React", "The user intefrace used to share information with other people")
+Container(frontendmods, "Web Application", "React", "The admin and moderator interface used to manage users")
+Container(backend, "API", "Java", "Handles all business logic")
+ContainerDb(usersdb, "Users database", "SQL", "Holds user information")
+ContainerDb(tweetsdb, "Tweets database", "SQL", "Contains tweets, comments")
+ContainerDb(followersdb, "Followers database", "SQL", "Contains relationships between users (follows)")
+ContainerDb(reactsdb, "Reacts database", "SQL", "Contains (heart) reacts on tweets - will be implemented if enough time left", $tags="v1.1")
+
+Rel(user, frontend, "Uses", "HTTPS")
+Rel(admin, frontendmods, "Uses", "HTTPS")
+Rel(moderator, frontendmods, "Uses", "HTTPS")
+Rel(frontendmods, backend, "Uses", "HTTPS")
+Rel(frontend, backend, "Uses", "HTTPS")
+Rel(backend, usersdb, "Reads/Writes")
+Rel(backend, tweetsdb, "Reads/Writes")
+Rel(backend, followersdb, "Reads/Writes")
+Rel(backend, reactsdb, "Reads/Writes")
+@enduml

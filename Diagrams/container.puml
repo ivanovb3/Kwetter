@@ -12,7 +12,7 @@ Container(frontendmods, "Web Application", "React", "The admin and moderator int
 Container(backend, "API Gateway", "Spring", "Microservice gateway handles all business logic")
 
 ContainerDb(usersdb, "Users database", "MySQL", "Holds user information")
-ContainerDb(tweetsdb, "Tweets database", "MySQL", "Contains tweets, comments")
+ContainerDb(tweetsdb, "Tweets database", "MySQL", "Contains tweets, comments, reacts")
 ContainerDb(followersdb, "Followers database", "MySQL", "Contains relationships between users (follows)")
 
 Rel(user, frontend, "Uses")

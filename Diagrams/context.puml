@@ -9,12 +9,11 @@ Person(moderator, "Moderator", "User responsible for protecting application's re
 
 Container(frontend, "Web Application", "React", "The user intefrace used to share information with other people")
 Container(frontendmods, "Web Application", "React", "The admin and moderator interface used to manage users")
-Container(backend, "API", "Java", "Handles all business logic with microservices")
+Container(backend, "API Gateway", "Spring", "Microservice gateway handles all business logic")
 
 ContainerDb(usersdb, "Users database", "MySQL", "Holds user information")
 ContainerDb(tweetsdb, "Tweets database", "MySQL", "Contains tweets, comments")
 ContainerDb(followersdb, "Followers database", "MySQL", "Contains relationships between users (follows)")
-ContainerDb(reactsdb, "Reacts database", "MySQL", "Contains (heart) reacts on tweets - will be implemented if enough time left", $tags="v1.1 - later stage")
 
 Rel(user, frontend, "Uses")
 Rel(admin, frontendmods, "Uses")
@@ -24,7 +23,6 @@ Rel(frontend, backend, "Uses", "HTTPS/JSON")
 Rel(backend, usersdb, "Reads/Writes")
 Rel(backend, tweetsdb, "Reads/Writes")
 Rel(backend, followersdb, "Reads/Writes")
-Rel(backend, reactsdb, "Reads/Writes")
 
 SHOW_LEGEND()
 @enduml

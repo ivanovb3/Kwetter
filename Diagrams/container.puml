@@ -1,16 +1,17 @@
 @startuml blogging_context
 !include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Container.puml
 
-AddElementTag("v1.1 - later stage", $fontColor="#d73027", $bgColor=$CONTAINER_BG_COLOR)
+SHOW_PERSON_OUTLINE()
 
 Person(user, "User", "Regular user who uses the social platform")
-Person(admin, "Administrator", "Resposible for managing user's roles and accounts")
+Person(admin, "Administrator", "User resposible for managing other user's roles and accounts")
 Person(moderator, "Moderator", "User responsible for protecting application's regulations")
 
 Container(frontend, "Web Application", "React", "The user intefrace used to share information with other people")
 Container(frontendmods, "Web Application", "React", "The admin and moderator interface used to manage users")
-Container(backend, "API Gateway", "Spring", "Microservice gateway handles all business logic")
-
+Boundary(c1, "Microservice system") {
+    Container(backend, "API Gateway", "Spring", "Microservice gateway handles all business logic")
+}
 ContainerDb(usersdb, "Users database", "MySQL", "Holds user information")
 ContainerDb(tweetsdb, "Tweets database", "MySQL", "Contains tweets, comments, reacts")
 ContainerDb(followersdb, "Followers database", "MySQL", "Contains relationships between users (follows)")

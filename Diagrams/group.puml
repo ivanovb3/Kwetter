@@ -1,0 +1,34 @@
+@startuml blogging_context
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Container.puml
+
+SHOW_PERSON_OUTLINE()
+
+Person(technical, "Technical Specialist", "Monitors the health of system's services")
+
+Container(thdash, "Technical Health (SWSP) Dashboard", "React", "")
+
+Container(ths, "Technical Health Service", "Node", "Monitors the system functionality")
+Container(sds, "Sensor Data Service", "Node", "Stores the Raw Data")
+Container(rds, "Raw Data Service", "Node", "Handles the Raw Data from Sensors")
+Container(nats, "NATS", "Event Bus")
+Boundary(c1, "OUT OF GROUP SCOPE") {
+    Container(caredash, "Caregiver Dashboard", "React", "")
+    Person(caregiver, "Caregiver", "Interacts with patients data")
+}
+ContainerDb(thdb, "Technical Health DB", "SQL", "Contains logs and other information")
+ContainerDb(sddb, "Sensor Data DB", "NoSQL", "Contains sensor data")
+
+
+Rel(technical, thdash, "Uses")
+Rel(thdash, ths, "API Calls")
+Rel(ths, thdb, "Reads/Writes")
+Rel(ths, nats, "Events")
+Rel(caregiver, caredash, "Uses")
+Rel(caredash, sds, "API Calls")
+Rel(sds, nats, "Events")
+Rel(sds, sddb, "Reads/Writes")
+Rel(rds, nats, "Events")
+
+SHOW_LEGEND()
+
+@enduml

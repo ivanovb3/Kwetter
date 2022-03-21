@@ -12,9 +12,9 @@ Container(frontendmods, "Web Application", "React", "The admin and moderator int
 Boundary(c1, "Microservice system") {
     Container(backend, "API Gateway", "Spring", "Microservice gateway handles all business logic")
 }
-ContainerDb(usersdb, "Users database", "MySQL", "Holds user information")
-ContainerDb(tweetsdb, "Tweets database", "MySQL", "Contains tweets, comments, reacts")
-ContainerDb(followersdb, "Followers database", "MySQL", "Contains relationships between users (follows)")
+ContainerDb(usersdb, "Database", "MySQL", "Contains records")
+' ContainerDb(tweetsdb, "Tweets database", "MySQL", "Contains tweets, comments, reacts")
+' ContainerDb(followersdb, "Followers database", "MySQL", "Contains relationships between users (follows)")
 
 Rel(user, frontend, "Uses")
 Rel(admin, frontendmods, "Uses")
@@ -22,8 +22,8 @@ Rel(moderator, frontendmods, "Uses")
 Rel(frontendmods, backend, "Uses", "HTTPS/JSON")
 Rel(frontend, backend, "Uses", "HTTPS/JSON")
 Rel(backend, usersdb, "Reads/Writes")
-Rel(backend, tweetsdb, "Reads/Writes")
-Rel(backend, followersdb, "Reads/Writes")
+' Rel(backend, tweetsdb, "Reads/Writes")
+' Rel(backend, followersdb, "Reads/Writes")
 
 SHOW_LEGEND()
 @enduml

@@ -3,6 +3,7 @@
 
 import express from 'express'
 import bodyParser from 'body-parser'
+import mongoose from 'mongoose'
 
 import { currentUserRouter } from './routes/current-user.js';
 import { signinRouter } from './routes/signin.js';
@@ -20,7 +21,20 @@ app.use(signupRouter);
 
 app.use(errorHandler);
 
-app.listen(4000, () => {
-    console.log('Listening on port 4000!')
-});
+const start = async () => {
+    try {
+        await mongoose.connect('mongodb://auth-mongo-srv:27017/auth');
+        console.log("Connected to MongoDb")
+    } catch (err) {
+        console.error(err)
+    }
+
+    app.listen(4000, () => {
+        console.log('Listening on port 4000!')
+    });
+};
+
+start();
+
+
 

@@ -4,7 +4,15 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon src/index.js"
+    "start": "nodemon src/index.js",
+    "test": "jest --watchAll"
+  },
+  "jest": {
+    "testEnvironment": "jest-environment-node",
+    "setupFilesAfterEnv": [
+      "./src/test/setup.js"
+    ],
+    "transform": {}
   },
   "keywords": [],
   "type": "module",
@@ -18,5 +26,10 @@
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^6.2.8",
     "nodemon": "^2.0.15"
+  },
+  "devDependencies": {
+    "jest": "^27.5.1",
+    "mongodb-memory-server": "^8.4.1",
+    "supertest": "^6.2.2"
   }
 }

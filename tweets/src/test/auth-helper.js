@@ -2,18 +2,18 @@ import request from 'supertest';
 import { app } from "../app.js";
 
 export const getAuthCookie = async () => {
-    const email = 'test@test.com';
-    const password = '1234';
+    // const email = 'test@test.com';
+    // const password = '1234';
 
-    const response = await request(app)
-        .post('/api/users/signup')
-        .send({
-            email,
-            password
-        })
-        .expect(201);
+    // const response = await request(app)
+    //     .post('/api/users/signup')
+    //     .send({
+    //         email,
+    //         password
+    //     })
+    //     .expect(201);
     
-    const cookie = response.get('Set-Cookie')
+    // const cookie = response.get('Set-Cookie')
 
     return cookie
 }

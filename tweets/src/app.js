@@ -4,7 +4,8 @@ import bodyParser from 'body-parser'
 import cookieSession from 'cookie-session'
 
 
-import { errorHandler } from '@rikwetter/common';
+import { errorHandler, currentUser, requireAuth } from '@rikwetter/common';
+import { createTweetRouter } from './routes/new-tweet.js';
 
 const app = express();
 
@@ -16,6 +17,9 @@ app.use(
         secure: process.env.NODE_ENV !== 'test'
     })
 );
+app.use(currentUser);
+app.use(requireAuth);
+app.use(createTweetRouter);
 
 app.use(errorHandler);
 

@@ -2,7 +2,7 @@ import express from 'express'
 import { body } from 'express-validator'
 import jwt from 'jsonwebtoken';
 
-import { validateRequest } from '../middlewares/validate-request.js';
+import { validateRequest } from '@rikwetter/common';
 import { User } from '../models/user.js';
 import { Password } from '../services/password.js';
 

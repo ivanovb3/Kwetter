@@ -7,7 +7,7 @@ import { currentUserRouter } from './routes/current-user.js';
 import { signinRouter } from './routes/signin.js';
 import { signoutRouter } from './routes/signout.js';
 import { signupRouter } from './routes/signup.js';
-import { errorHandler } from './middlewares/error-handler.js';
+import { errorHandler } from '@rikwetter/common';
 
 const app = express();
 

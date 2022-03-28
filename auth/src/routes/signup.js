@@ -1,7 +1,7 @@
 import express from 'express'
 import { body } from 'express-validator'
 import { User } from '../models/user.js';
-import { validateRequest } from '../middlewares/validate-request.js';
+import { validateRequest } from '@rikwetter/common';
 import jwt from 'jsonwebtoken'
 
 const router = express.Router();

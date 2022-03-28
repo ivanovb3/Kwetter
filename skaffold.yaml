@@ -16,4 +16,12 @@ build:
         manual:
           - src: 'src/**/*.js'
             dest: .
+    - image: ivanovb3/tweets
+      context: tweets
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - src: 'src/**/*.js'
+            dest: .
 

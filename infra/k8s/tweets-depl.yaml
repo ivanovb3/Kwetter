@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: tweets-depl
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: tweets
+  template:
+    metadata:
+      labels:
+        app: tweets
+    spec:
+      containers:
+        - name: tweets
+          image: ivanovb3/tweets
+          env:
+            - name: MONGO_URI
+              value: 'mongodb://tweets-mongo-srv:27017/tweets'
+            - name: JWT_KEY
+              valueFrom:  
+                secretKeyRef:
+                  name: jwt-secret
+                  key: JWT_KEY
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: tweets-srv
+spec:
+  selector:
+    app: tweets
+  ports:
+    - name: tweets
+      protocol: TCP
+      port: 4000
+      targetPort: 4000

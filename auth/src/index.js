@@ -6,9 +6,12 @@ const start = async () => {
     if (!process.env.JWT_KEY) {
         console.log('JWT_KEY Missing!')
     }
+    if (!process.env.MONGO_URI) {
+        console.log('Mongo Uri Missing!')
+    }
     try {
-        await mongoose.connect('mongodb://auth-mongo-srv:27017/auth');
-        console.log("Connected to MongoDb")
+        await mongoose.connect(process.env.MONGO_URI);
+        console.log("Connected to MongoDb auth")
     } catch (err) {
         console.error(err)
     }

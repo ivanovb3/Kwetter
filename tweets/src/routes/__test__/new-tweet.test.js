@@ -1,5 +1,6 @@
 import request from 'supertest'
 import { app } from '../../app.js'
+import { getAuthCookie } from '../../test/auth-helper.js';
 
 it('has a route handler listening to /api/tweets for post requests', async () => {
     const response = await request(app)
@@ -19,6 +20,7 @@ it('can only be accessed if the user is signed in', async () => {
 it('can be accessed if the user is signed in', async () => {
     const response = await request(app)
         .post('/api/tweets')
+        .set('Cookie', getAuthCookie())
         .send({})
     
     expect(response.status).not.toEqual(401);

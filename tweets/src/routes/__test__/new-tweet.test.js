@@ -1,6 +1,7 @@
 import request from 'supertest'
 import { app } from '../../app.js'
 import { getAuthCookie } from '../../test/auth-helper.js';
+import { Tweet } from '../../models/tweet.js'
 
 it('has a route handler listening to /api/tweets for post requests', async () => {
     const response = await request(app)
@@ -17,8 +18,8 @@ it('can only be accessed if the user is signed in', async () => {
         .expect(401)
 });
 
-it('can be accessed if the user is signed in', async () => {
-    const response = await request(app)
+it('can be accessed if the user is signed in', () => {
+    const response = request(app)
         .post('/api/tweets')
         .set('Cookie', getAuthCookie())
         .send({})
@@ -27,9 +28,33 @@ it('can be accessed if the user is signed in', async () => {
 });
 
 it('returns an error if empty tweet is provided', async () => {
-    
+    const response = await request(app)
+        .post('/api/tweets')
+        .set('Cookie', getAuthCookie())
+        .send({
+            content: ''
+        })
+        .expect(400);
+
+    expect(response.body.errors[0].message).toEqual('Content must be provided')
 });
 
 it('creates a new ticket', async () => {
+    let tweets = await Tweet.find({});
+    expect(tweets.length).toEqual(0);
+
+    const content = 'This is a tweet'
+
+    const response = await request(app)
+        .post('/api/tweets')
+        .set('Cookie', getAuthCookie())
+        .send({
+            content: content
+        })
+        .expect(201);
+
+    tweets = await Tweet.find({});
+    expect(tweets.length).toEqual(1);
+    expect(tweets[0].content).toEqual(content)
     
 });

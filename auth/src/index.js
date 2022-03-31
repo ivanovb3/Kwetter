@@ -1,4 +1,5 @@
 import mongoose from 'mongoose'
+import axios from 'axios'
 
 import { app } from './app.js'
 
@@ -18,6 +19,10 @@ const start = async () => {
 
     app.listen(4000, () => {
         console.log('Listening on port 4000!')
+        // axios.get('https://kwetter.com/api/users/currentuser', {
+        //     email: 'test@test.com',
+        //     password: '12345'
+        // })
     });
 };
 

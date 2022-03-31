@@ -1,6 +1,6 @@
 import express from 'express';
 
-import { currentUser } from '@rikwetter/common';
+import { currentUser, requireAuth } from '@rikwetter/common';
 
 const router = express.Router();
 

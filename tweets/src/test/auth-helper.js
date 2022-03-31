@@ -1,11 +1,12 @@
 import request from 'supertest';
 import { app } from "../app.js";
 import jwt from 'jsonwebtoken'
+import mongoose from 'mongoose';
 
-export const getAuthCookie = async () => {
+export const getAuthCookie = () => {
 
     const payload = {
-        id: '123zgsfgg',
+        id: new mongoose.Types.ObjectId().toHexString(),
         email: 'test@test.com'
     }
 
@@ -15,7 +16,6 @@ export const getAuthCookie = async () => {
     const sessionJSON = JSON.stringify(session);
 
     const base64 = Buffer.from(sessionJSON).toString('base64');
-    console.log(`exppress:sess=${base64}`)
-
-    return [`exppress:sess=${base64}`];
+ 
+    return [`session=${base64}`];
 }

@@ -8,6 +8,7 @@
     "listen": "nodemon src/listener.js"
   },
   "keywords": [],
+  "type": "module",
   "author": "",
   "license": "ISC",
   "dependencies": {

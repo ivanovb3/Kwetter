@@ -6,28 +6,46 @@ SHOW_PERSON_OUTLINE()
 Person(technical, "Technical Specialist", "Monitors the health of system's services")
 
 Container(thdash, "Technical Health (SWSP) Dashboard", "React", "")
+Container(gateway, "Gateway")
 
-Container(ths, "Technical Health Service", "Node", "Monitors the system functionality")
-Container(sds, "Sensor Data Service", "Node", "Stores the Raw Data")
-Container(rds, "Raw Data Service", "Node", "Handles the Raw Data from Sensors")
-Container(nats, "NATS", "Event Bus")
+Container(ths, "Technical Health Service", "DotNet", "Monitors the system functionality")
+Container(sds, "Sensor Data Service", "DotNet", "Stores the Raw Data")
+Container(rds, "Raw Data Service", "DotNet", "Handles the Raw Data from Sensors")
+Container(nats, "Event Bus", "NATS")
 Boundary(c1, "OUT OF GROUP SCOPE") {
     Container(caredash, "Caregiver Dashboard", "React", "")
     Person(caregiver, "Caregiver", "Interacts with patients data")
 }
 ContainerDb(thdb, "Technical Health DB", "SQL", "Contains logs and other information")
-ContainerDb(sddb, "Sensor Data DB", "NoSQL", "Contains sensor data")
+ContainerDb(sddb, "Sensor Data DB", "SQL", "Contains sensor data")
+ContainerDb(rddb, "Raw Data DB", "SQL", "Contains structured sensor data")
+ContainerDb(ebdb, "Event bus DB", "SQL", "Contains hisotry of messages")
 
 
 Rel(technical, thdash, "Uses")
-Rel(thdash, ths, "API Calls")
-Rel(ths, thdb, "Reads/Writes")
-Rel(ths, nats, "Events")
 Rel(caregiver, caredash, "Uses")
-Rel(caredash, sds, "API Calls")
-Rel(sds, nats, "Events")
+Rel(thdash, gateway, "API calls")
+Rel(caredash, gateway, "API calls")
+Rel(gateway, nats, "publish/listen")
+Rel(nats, ebdb, "publish/listen")
+Rel(nats, ths, "publish/listen")
+Rel(nats, rds, "publish/listen")
+Rel(nats, sds, "publish/listen")
+
+Rel(ths, thdb, "Reads/Writes")
 Rel(sds, sddb, "Reads/Writes")
-Rel(rds, nats, "Events")
+Rel(rds, rddb, "Reads/Writes")
+
+
+' Rel(technical, thdash, "Uses")
+' Rel(thdash, ths, "API Calls")
+' Rel(ths, thdb, "Reads/Writes")
+' Rel(ths, nats, "Events")
+' Rel(caregiver, caredash, "Uses")
+' Rel(caredash, sds, "API Calls")
+' Rel(sds, nats, "Events")
+' Rel(sds, sddb, "Reads/Writes")
+' Rel(rds, nats, "Events")
 
 SHOW_LEGEND()
 

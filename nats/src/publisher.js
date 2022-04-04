@@ -21,14 +21,4 @@ stan.on('connect', async () => {
     catch (err) {
         console.log(err);
     }
-
-    // const data = JSON.stringify({
-    //     id: '123',
-    //     title: 'concert',
-    //     price: 20,
-    //   });
-
-    //   stan.publish('tweet:created', data, () => {
-    //     console.log('Event published');
-    //   });
 })

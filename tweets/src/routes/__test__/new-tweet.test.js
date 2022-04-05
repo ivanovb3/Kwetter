@@ -2,6 +2,7 @@ import request from 'supertest'
 import { app } from '../../app.js'
 import { getAuthCookie } from '../../test/auth-helper.js';
 import { Tweet } from '../../models/tweet.js'
+import { natsWrapper } from '../../nats-wrapper.js'
 
 it('has a route handler listening to /api/tweets for post requests', async () => {
     const response = await request(app)
@@ -58,3 +59,17 @@ it('creates a new ticket', async () => {
     expect(tweets[0].content).toEqual(content)
 
 });
+
+it('publishes an event', async () => {
+    const content = 'This is a tweet'
+
+    const response = await request(app)
+        .post('/api/tweets')
+        .set('Cookie', getAuthCookie())
+        .send({
+            content: content
+        })
+        .expect(201);
+
+    expect(natsWrapper.client.publish).toHaveBeenCalled();
+})

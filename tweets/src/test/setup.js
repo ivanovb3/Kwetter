@@ -6,14 +6,15 @@ import { natsWrapper } from '../nats-wrapper.js';
 
 jest.mock('../nats-wrapper.js')
 natsWrapper.client = {
-    publish: (subject, data, callback) => {
+    publish: jest.fn().mockImplementation((subject, data, callback) => {
         callback();
-    }
+    })
 }
 
 let mongo;
 
 beforeAll(async () => {
+    jest.clearAllMocks();
     process.env.JWT_KEY = 'kwettersecret';
     
     mongo = await MongoMemoryServer.create();

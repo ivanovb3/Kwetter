@@ -18,7 +18,7 @@ router.post('/api/tweets', requireAuth, [
     const tweet = new Tweet({content, userId});
     await tweet.save();
 
-    await new Publisher(natsWrapper.client, 'tweet:created').publish({
+    await new Publisher(natsWrapper.client, 'tweet:created').publish({   
         id: tweet.id,
         content: tweet.content,
         userId: tweet.userId

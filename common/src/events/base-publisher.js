@@ -1,6 +1,6 @@
 export class Publisher {
 
-    constructor(client, subject,) {
+    constructor(client, subject) {
         this.client = client;
         this.subject = subject
     }

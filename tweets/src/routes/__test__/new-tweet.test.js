@@ -23,7 +23,7 @@ it('can be accessed if the user is signed in', () => {
         .post('/api/tweets')
         .set('Cookie', getAuthCookie())
         .send({})
-    
+
     expect(response.status).not.toEqual(401);
 });
 
@@ -56,5 +56,5 @@ it('creates a new ticket', async () => {
     tweets = await Tweet.find({});
     expect(tweets.length).toEqual(1);
     expect(tweets[0].content).toEqual(content)
-    
+
 });

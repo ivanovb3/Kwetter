@@ -1,6 +1,15 @@
 import { MongoMemoryServer } from 'mongodb-memory-server';
 import mongoose from 'mongoose';
 import { app } from "../app.js";
+import { jest } from '@jest/globals';
+import { natsWrapper } from '../nats-wrapper.js';
+
+jest.mock('../nats-wrapper.js')
+natsWrapper.client = {
+    publish: (subject, data, callback) => {
+        callback();
+    }
+}
 
 let mongo;
 
@@ -14,6 +23,8 @@ beforeAll(async () => {
         useNewUrlParser: true,
         useUnifiedTopology: true
     });
+
+
 });
 
 beforeEach(async () => {

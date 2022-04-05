@@ -8,6 +8,10 @@ class NatsWrapper {
         }
         return this._client;
     }
+    //Used for running tests
+    set client(client){
+        this._client = client;
+    }
 
     connect(clusterId, clientId, url) {
         this._client = nats.connect(clusterId, clientId, { url });

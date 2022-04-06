@@ -8,6 +8,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - run: cd auth && npm install && node --experimental-vm-modules node_modules/jest/bin/jest.js:ci
+      - run: cd auth && npm install && node --experimental-vm-modules node_modules/jest/bin/jest.js
     
   

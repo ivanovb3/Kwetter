@@ -19,11 +19,12 @@ it('can only be accessed if the user is signed in', async () => {
         .expect(401)
 });
 
-it('can be accessed if the user is signed in', () => {
+it('can be accessed if the user is signed in', (done) => {
     const response = request(app)
         .post('/api/tweets')
         .set('Cookie', getAuthCookie())
         .send({})
+        .end(done)
 
     expect(response.status).not.toEqual(401);
 });

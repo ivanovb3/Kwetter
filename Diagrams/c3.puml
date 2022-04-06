@@ -1,0 +1,58 @@
+@startuml blogging_context
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Container.puml
+
+AddElementTag("microservice", $bgColor="#93A8FF")
+
+System_Boundary(c1, "Kubernetes cluster") {
+Container(frontend, "Web Application", "JavaScript, React", "The user intefrace used to share information with other people")
+Container(frontendmods, "Web Application", "JavaScript, React", "The admin and moderator interface used to manage users")
+Container(gateway, "API Gateway", "Ingress", "Service discovery, load balancing")
+
+System_Boundary(c3, "Microservice system") {
+    Container(userservice, "User Service", "NodeJS", "Handles access with users information", $tags="microservice")
+    Container(tweetservice, "Tweet Service", "NodeJS", "Handles communication with tweets", $tags="microservice")
+    Container(followerservice, "Follower Service", "NodeJS", "Handles communication with followers", $tags="microservice")
+    Container(authservice, "Auth Service", "NodeJS", "Handles user authentication", $tags="microservice")
+    Container(reactservice, "React Service", "NodeJS", "Handles reacts", $tags="microservice")
+    Container(trendservice, "Trend Service", "NodeJS", "Handles trends", $tags="microservice")
+
+    ContainerDb(usersdb, "Users database", "MongoDB", "Contains user information")
+    ContainerDb(tweetsdb, "Tweets database", "MongoDB", "Contains tweets, comments, reacts")    
+    ContainerDb(followersdb, "Followers database", "MongoDB", "Contains relationships between users (follows)")
+    ContainerDb(reactsdb, "Reacts database", "MongoDB", "Contains reacts")    
+    ContainerDb(trendsdb, "Trends database", "MongoDB", "Contains trends") 
+    ContainerDb(authdb, "Auth database", "MongoDB", "Contains user's credentials") 
+
+    Container(eventbus, "Event Bus", "NATS", "Communication between microservices")
+    ContainerDb(eventdb, "Event bus database", "MySQL", "Contains records of messages")  
+    }
+}
+
+
+Rel(frontend, gateway, "Makes API calls ", "HTTPS/JSON")
+Rel(frontendmods, gateway, "Makes API calls ", "HTTPS/JSON")
+Rel(gateway, userservice, "Request")
+Rel(gateway, tweetservice, "Request")
+Rel(gateway, followerservice, "Request")
+Rel(gateway, reactservice, "Request")
+Rel(gateway, trendservice, "Request")
+Rel(gateway, authservice, "Request")
+
+Rel(userservice, usersdb, "Reads/Writes")
+Rel(tweetservice, tweetsdb, "Reads/Writes")
+Rel(followerservice, followersdb, "Reads/Writes")
+Rel(trendservice, trendsdb, "Reads/Writes")
+Rel(reactservice, reactsdb, "Reads/Writes")
+Rel(authservice, authdb, "Reads/Writes")
+
+Rel(userservice, eventbus, "Event")
+Rel(tweetservice, eventbus, "Event")
+Rel(followerservice, eventbus, "Event")
+Rel(trendservice, eventbus, "Event")
+Rel(reactservice, eventbus, "Event")
+Rel(authservice, eventbus, "Event")
+
+Rel(eventbus, eventdb, "Reads/Writes")
+
+SHOW_LEGEND()
+@enduml

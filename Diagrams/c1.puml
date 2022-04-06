@@ -10,11 +10,9 @@ Person(moderator, "Moderator", "User responsible for protecting application's re
 Container(frontend, "Web Application", "React", "The user intefrace used to share information with other people")
 Container(frontendmods, "Web Application", "React", "The admin and moderator interface used to manage users")
 Boundary(c1, "Microservice system") {
-    Container(backend, "API Gateway", "Spring", "Microservice gateway handles all business logic")
+    Container(backend, "API Gateway", "Node", "Microservice system handles all business logic")
 }
 ContainerDb(usersdb, "Database", "MySQL", "Contains records")
-' ContainerDb(tweetsdb, "Tweets database", "MySQL", "Contains tweets, comments, reacts")
-' ContainerDb(followersdb, "Followers database", "MySQL", "Contains relationships between users (follows)")
 
 Rel(user, frontend, "Uses")
 Rel(admin, frontendmods, "Uses")
@@ -22,8 +20,6 @@ Rel(moderator, frontendmods, "Uses")
 Rel(frontendmods, backend, "Uses", "HTTPS/JSON")
 Rel(frontend, backend, "Uses", "HTTPS/JSON")
 Rel(backend, usersdb, "Reads/Writes")
-' Rel(backend, tweetsdb, "Reads/Writes")
-' Rel(backend, followersdb, "Reads/Writes")
 
 SHOW_LEGEND()
 @enduml

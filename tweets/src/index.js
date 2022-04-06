@@ -4,7 +4,7 @@ import { natsWrapper } from './nats-wrapper.js';
 
 const start = async () => {
     if (!process.env.JWT_KEY) {
-        console.log('JWT_KEY Missing!');
+        console.log('JWT_KEY Missing!!');
     }
     if (!process.env.MONGO_URI) {
         console.log('Mongo Uri Missing!');

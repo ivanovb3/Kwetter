@@ -1,9 +1,9 @@
 name: test-tweets
 
 on:
-  push:
-    branches: 
-      - 'master'
+  pull_request:
+    paths: 
+      - 'tweets/**'
   
 jobs:
   build:

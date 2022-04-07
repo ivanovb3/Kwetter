@@ -1,9 +1,9 @@
 name: test-auth
 
 on:
-  push:
-    branches: 
-      - 'master'
+  pull_request:
+    paths: 
+      - 'auth/**'
   
 jobs:
   build:

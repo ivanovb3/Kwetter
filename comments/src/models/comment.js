@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 
-const tweetSchema = new mongoose.Schema({
+const commentSchema = new mongoose.Schema({
     content: {
         type: String,
         required: true
@@ -8,6 +8,10 @@ const tweetSchema = new mongoose.Schema({
     userId: {
         type: String,
         required: true
+    },
+    tweet: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Tweet'
     }
 }, {
     toJSON: {
@@ -19,6 +23,6 @@ const tweetSchema = new mongoose.Schema({
     timestamps: true 
 });
 
-const Tweet = mongoose.model('Tweet', tweetSchema);
+const Comment = mongoose.model('Comment', commentSchema);
 
-export { Tweet };
+export { Comment };

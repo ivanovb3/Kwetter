@@ -1,8 +1,9 @@
 import express from 'express';
-import { requireAuth, validateRequest } from '@rikwetter/common';
+import { requireAuth, validateRequest, Publisher } from '@rikwetter/common';
 import { body } from 'express-validator';
 import { Tweet } from '../models/tweet.js'
 import { Comment } from '../models/comment.js'
+import { natsWrapper } from '../nats-wrapper.js';
 
 const router = express.Router();
 
@@ -25,9 +26,16 @@ router.post('/api/comments', requireAuth, [
         return res.status(404).send('Not found tweet');
     }
     //Post comment
-    const comment = new Comment({content, userId, tweet})
+    const comment = new Comment({content, userId, tweetId})
     await comment.save();
+
     //Emit to nats
+    await new Publisher(natsWrapper.client, 'comment:created').publish({   
+        id: comment.id,
+        content: comment.content,
+        userId: comment.userId,
+        tweetId: comment.tweetId
+    })
 
     res.status(201).send(comment);
 })

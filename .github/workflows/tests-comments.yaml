@@ -1,0 +1,13 @@
+name: test-comments
+
+on:
+  pull_request:
+    paths: 
+      - 'comments/**'
+  
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - run: cd comments && npm install && node --experimental-vm-modules node_modules/jest/bin/jest.js

@@ -84,16 +84,18 @@ it('creates a new comment', async () => {
 
 });
 
-// it('publishes an event', async () => {
-//     const content = 'This is a tweet'
+it('publishes an event', async () => {
+    const tweet = new Tweet()
+    await tweet.save()
 
-//     const response = await request(app)
-//         .post('/api/tweets')
-//         .set('Cookie', getAuthCookie())
-//         .send({
-//             content: content
-//         })
-//         .expect(201);
+    await request(app)
+        .post('/api/comments')
+        .set('Cookie', getAuthCookie())
+        .send({
+            content: 'This is a comment',
+            tweetId: tweet.id
+        })
+        .expect(201);
 
-//     expect(natsWrapper.client.publish).toHaveBeenCalled();
-// })
+    expect(natsWrapper.client.publish).toHaveBeenCalled();
+})

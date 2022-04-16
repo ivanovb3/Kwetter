@@ -9,10 +9,14 @@ const commentSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    tweet: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'Tweet'
+    tweetId: {
+        type: String,
+        required: true
     }
+    // tweet: {
+    //     type: mongoose.Schema.Types.ObjectId,
+    //     ref: 'Tweet'
+    // }
 }, {
     toJSON: {
         transform(doc, ret){

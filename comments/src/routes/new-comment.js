@@ -25,7 +25,7 @@ router.post('/api/comments', requireAuth, [
         return res.status(404).send('Not found tweet');
     }
     //Post comment
-    const comment = new Comment({content, userId, tweet})
+    const comment = new Comment({content, userId, tweetId})
     await comment.save();
     //Emit to nats
 

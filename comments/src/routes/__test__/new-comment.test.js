@@ -73,7 +73,7 @@ it('creates a new comment', async () => {
     const tweet = new Tweet()
     await tweet.save()
 
-    await request(app)
+    const response = await request(app)
         .post('/api/comments')
         .set('Cookie', getAuthCookie())
         .send({
@@ -81,7 +81,6 @@ it('creates a new comment', async () => {
             tweetId: tweet.id
         })
         .expect(201);
-    console.log(tweet.id)
 
 });
 

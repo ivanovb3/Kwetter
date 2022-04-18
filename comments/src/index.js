@@ -1,6 +1,7 @@
 import mongoose from 'mongoose';
 import { app } from './app.js';
 import { natsWrapper } from './nats-wrapper.js';
+import { TweetCreatedListener } from './events/tweet-created-listener.js';
 
 const start = async () => {
     if (!process.env.JWT_KEY) {
@@ -21,8 +22,10 @@ const start = async () => {
         process.on('SiGINT', () => natsWrapper.client.close());
         process.on('SIGTERM', () => natsWrapper.client.close());
 
+        new TweetCreatedListener(natsWrapper.client, 'tweet:created', 'comments-service').listen();
+
         await mongoose.connect(process.env.MONGO_URI);
-        console.log("Connected to MongoDb comments")
+        console.log("Connected to MongoDb comments");
     } catch (err) {
         console.error(err)
     }

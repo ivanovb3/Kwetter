@@ -1,8 +1,8 @@
 import mongoose from "mongoose";
-import reactSchema from "./react.js"
+//import { reactSchema } from "./react.js";
 
 const tweetSchema = new mongoose.Schema({
-    reacts: [reactSchema]
+    reacts: []   //reactSchema    //{userId: String, required: true}
 }, {
     toJSON: {
         transform(doc, ret) {

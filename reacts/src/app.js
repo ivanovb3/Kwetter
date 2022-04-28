@@ -5,6 +5,8 @@ import cookieSession from 'cookie-session'
 
 
 import { errorHandler, currentUser } from '@rikwetter/common';
+import { reactHandlerRouter } from './routes/react-handler.js';
+import { showReactRouter } from './routes/show-reacts.js';
 
 const app = express();
 
@@ -17,6 +19,9 @@ app.use(
     })
 );
 app.use(currentUser);
+
+app.use(reactHandlerRouter);
+app.use(showReactRouter);
 
 app.use(errorHandler);
 

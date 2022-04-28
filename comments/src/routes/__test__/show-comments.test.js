@@ -3,7 +3,6 @@ import { app } from '../../app.js'
 import { getAuthCookie } from '../../test/auth-helper.js';
 import { Tweet } from '../../models/tweet.js'
 import { Comment } from '../../models/comment.js';
-import { natsWrapper } from '../../nats-wrapper.js'
 
 it('shows all comments of a tweet', async () => {
     //Create 2 tweets 

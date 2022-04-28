@@ -32,4 +32,12 @@ build:
         manual:
           - src: 'src/**/*.js'
             dest: .
+    - image: ivanovb3/reacts
+      context: reacts
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - src: 'src/**/*.js'
+            dest: .
 

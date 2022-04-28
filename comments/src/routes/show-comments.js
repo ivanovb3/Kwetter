@@ -9,7 +9,8 @@ router.get('/api/comments/:tweetId', requireAuth, async (req, res) => {
     const tweetId = req.params.tweetId;
 
     const tweet = await Tweet.findById(tweetId);
-    if(!tweet) {
+
+    if (!tweet) {
         return res.status(404).send('Not found tweet');
     }
 

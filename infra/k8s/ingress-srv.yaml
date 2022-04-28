@@ -36,4 +36,11 @@ spec:
                 name: comments-srv
                 port:
                   number: 4000
+          - path: /api/reacts/?(.*)
+            pathType: Prefix
+            backend:
+              service:
+                name: reacts-srv
+                port:
+                  number: 4000
               

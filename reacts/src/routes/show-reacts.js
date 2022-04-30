@@ -1,21 +1,21 @@
 import express from 'express';
-import { requireAuth, validateRequest, Publisher } from '@rikwetter/common';
-import { Tweet } from '../models/tweet.js'
+import { requireAuth } from '@rikwetter/common';
+import { Content } from '../models/content.js'
 
 const router = express.Router();
 
-router.get('/api/reacts/:tweetId', requireAuth, async (req, res) => {
-    //Find tweet to post a comment on
-    const tweetId = req.params.tweetId;
+router.get('/api/reacts/:contentId', requireAuth, async (req, res) => {
+    //Find content to post a comment on
+    const contentId = req.params.contentId;
 
-    const tweet = await Tweet.findById(tweetId);
-    if(!tweet) {
-        return res.sendStatus(404).send('Not found tweet');
+    const content = await Content.findById(contentId);
+    if(!content) {
+        return res.sendStatus(404).send('Not found content');
     }
 
-    const tweetReacts = tweet.reacts;
+    const contentReacts = content.reacts;
 
-    res.status(200).send(tweetReacts);
+    res.status(200).send(contentReacts);
 })
 
 export { router as showReactRouter };

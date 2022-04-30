@@ -1,38 +1,37 @@
 import express from 'express';
 import { requireAuth, validateRequest, Publisher } from '@rikwetter/common';
 import { body } from 'express-validator';
-import { Tweet } from '../models/tweet.js'
-//import { React } from '../models/react.js';
+import { Content } from '../models/content.js'
 
 const router = express.Router();
 
 router.post('/api/reacts', requireAuth, [
-    body('tweetId')
+    body('contentId')
         .not()
         .isEmpty()
-        .withMessage('Tweet id must be provided')
+        .withMessage('Content id must be provided')
 ], validateRequest, async (req, res) => {
-    //Find tweet to post a comment on
-    const { tweetId } = req.body;
+    //Find content to post a comment on
+    const { contentId } = req.body;
     const userId = req.currentUser.id;
 
-    const tweet = await Tweet.findById(tweetId);
-    if(!tweet) {
-        return res.sendStatus(404).send('Not found tweet');
+    const content = await Content.findById(contentId);
+    if(!content) {
+        return res.sendStatus(404).send('Not found content');
     }
 
-    const tweetReacts = tweet.reacts;
+    const contentReacts = content.reacts;
 
-    if(tweetReacts.includes(userId)){
-        tweetReacts.splice(tweetReacts.indexOf(userId), 1)
+    if(contentReacts.includes(userId)){
+        contentReacts.splice(contentReacts.indexOf(userId), 1)
     }
     else{
-        tweetReacts.push(userId);
+        contentReacts.push(userId);
     }
-    tweet.reacts = tweetReacts;
-    await tweet.save()
+    content.reacts = contentReacts;
+    await content.save()
 
-    res.status(201).send(tweet);
+    res.status(201).send(content);
 })
 
 export { router as reactHandlerRouter };

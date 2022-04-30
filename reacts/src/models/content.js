@@ -1,7 +1,6 @@
 import mongoose from "mongoose";
-//import { reactSchema } from "./react.js";
 
-const tweetSchema = new mongoose.Schema({
+const contentSchema = new mongoose.Schema({
     reacts: []   //reactSchema    //{userId: String, required: true}
 }, {
     toJSON: {
@@ -12,6 +11,6 @@ const tweetSchema = new mongoose.Schema({
     }
 });
 
-const Tweet = mongoose.model('Tweet', tweetSchema);
+const Content = mongoose.model('Content', contentSchema);
 
-export { Tweet };
+export { Content };

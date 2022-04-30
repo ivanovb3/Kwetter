@@ -1,7 +1,7 @@
 import request from 'supertest'
 import { app } from '../../app.js'
 import { getAuthCookie } from '../../test/auth-helper.js';
-import { Tweet } from '../../models/tweet.js';
+import { Content } from '../../models/content.js';
 import { natsWrapper } from '../../nats-wrapper.js'
 import mongoose from 'mongoose'
 
@@ -30,40 +30,40 @@ it('can be accessed if the user is signed in', (done) => {
     expect(response.status).not.toEqual(401);
 });
 
-it('returns an error if no tweet is specified', async () => {
+it('returns an error if no content is specified', async () => {
     const response = await request(app)
         .post('/api/reacts')
         .set('Cookie', getAuthCookie())
         .send({
-            tweetId: ''
+            contentId: ''
         })
         .expect(400);
 
-    expect(response.body.errors[0].message).toEqual('Tweet id must be provided')
+    expect(response.body.errors[0].message).toEqual('Content id must be provided')
 });
 
-it('returns an error if the tweet does not exist', async () => {
-    const tweetId = mongoose.Types.ObjectId();
+it('returns an error if the content does not exist', async () => {
+    const contentId = mongoose.Types.ObjectId();
 
     await request(app)
         .post('/api/reacts')
         .set('Cookie', getAuthCookie())
         .send({
-            tweetId: tweetId
+            contentId: contentId
         })
         .expect(404);
 })
 
-it('test adding a heart react to a tweet', async () => {
-    const tweet = new Tweet()
-    await tweet.save()
-    expect(tweet.reacts.length).toEqual(0);
+it('test adding a heart react to a content', async () => {
+    const content = new Content();
+    await content.save()
+    expect(content.reacts.length).toEqual(0);
 
     const response = await request(app)
         .post('/api/reacts')
         .set('Cookie', getAuthCookie())
         .send({
-            tweetId: tweet.id
+            contentId: content.id
         })
         .expect(201);
 
@@ -71,10 +71,10 @@ it('test adding a heart react to a tweet', async () => {
 
 });
 
-it('test removing a heart react from a tweet', async () => {
-    const tweet = new Tweet()
-    await tweet.save()
-    expect(tweet.reacts.length).toEqual(0);
+it('test removing a heart react from a content', async () => {
+    const content = new Content();
+    await content.save()
+    expect(content.reacts.length).toEqual(0);
 
     const user = getAuthCookie();
 
@@ -82,7 +82,7 @@ it('test removing a heart react from a tweet', async () => {
         .post('/api/reacts')
         .set('Cookie', user)
         .send({
-            tweetId: tweet.id
+            contentId: content.id
         })
         .expect(201);
 
@@ -92,7 +92,7 @@ it('test removing a heart react from a tweet', async () => {
         .post('/api/reacts')
         .set('Cookie', user)
         .send({
-            tweetId: tweet.id
+            contentId: content.id
         })
         .expect(201);
 
@@ -101,15 +101,15 @@ it('test removing a heart react from a tweet', async () => {
 });
 
 // it('publishes an event', async () => {
-//     const tweet = new Tweet()
-//     await tweet.save()
+//     const content = new content()
+//     await content.save()
 
 //     await request(app)
 //         .post('/api/comments')
 //         .set('Cookie', getAuthCookie())
 //         .send({
 //             content: 'This is a comment',
-//             tweetId: tweet.id
+//             contentId: content.id
 //         })
 //         .expect(201);
 

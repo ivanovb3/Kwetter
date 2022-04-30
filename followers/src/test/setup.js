@@ -1,6 +1,5 @@
 import { MongoMemoryServer } from 'mongodb-memory-server';
 import mongoose from 'mongoose';
-import { app } from "../app.js";
 import { jest } from '@jest/globals';
 import { natsWrapper } from '../nats-wrapper.js';
 
@@ -24,6 +23,8 @@ beforeAll(async () => {
         useNewUrlParser: true,
         useUnifiedTopology: true
     });
+
+
 });
 
 beforeEach(async () => {

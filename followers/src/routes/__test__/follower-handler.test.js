@@ -76,7 +76,6 @@ it('sucessfully one user follows another', async () => {
 
     expect(response.body.following.length).toEqual(1);
     expect(response.body.followers.length).toEqual(0);
-
 });
 
 it('sucessfully one user unfollowes another', async () => {
@@ -113,19 +112,3 @@ it('sucessfully one user unfollowes another', async () => {
     expect(responseUnfollow.body.following.length).toEqual(0);
     expect(responseUnfollow.body.followers.length).toEqual(0);
 });
-
-// it('publishes an event', async () => {
-//     const content = new content()
-//     await content.save()
-
-//     await request(app)
-//         .post('/api/comments')
-//         .set('Cookie', getAuthCookie())
-//         .send({
-//             content: 'This is a comment',
-//             contentId: content.id
-//         })
-//         .expect(201);
-
-//     expect(natsWrapper.client.publish).toHaveBeenCalled();
-// })

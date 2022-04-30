@@ -6,6 +6,7 @@ import cookieSession from 'cookie-session'
 
 import { errorHandler, currentUser } from '@rikwetter/common';
 import { followerHandlerRouter } from './routes/follower-handler.js';
+import { showFollowingRouter } from './routes/show-following.js';
 
 const app = express();
 
@@ -20,6 +21,7 @@ app.use(
 app.use(currentUser);
 
 app.use(followerHandlerRouter);
+app.use(showFollowingRouter);
 
 app.use(errorHandler);
 

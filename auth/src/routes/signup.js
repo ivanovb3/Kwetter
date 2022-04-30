@@ -1,8 +1,9 @@
 import express from 'express'
 import { body } from 'express-validator'
 import { User } from '../models/user.js';
-import { validateRequest } from '@rikwetter/common';
+import { validateRequest, Publisher } from '@rikwetter/common';
 import jwt from 'jsonwebtoken'
+import { natsWrapper } from '../nats-wrapper.js';
 
 const router = express.Router();
 
@@ -23,6 +24,11 @@ router.post('/api/users/signup', [
 
         const user = new User({email, password});
         await user.save();
+
+        await new Publisher(natsWrapper.client, 'user:created').publish({   
+            id: user.id,
+            email: user.email
+        })
 
         //Generate JWT 
         const userJwt = jwt.sign({

@@ -1,0 +1,13 @@
+name: test-followers
+
+on:
+  pull_request:
+    paths: 
+      - 'followers/**'
+  
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - run: cd followers && npm install && node --experimental-vm-modules node_modules/jest/bin/jest.js

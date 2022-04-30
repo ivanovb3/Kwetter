@@ -1,5 +1,4 @@
 import mongoose from "mongoose";
-import { followerSchema } from "./follower.js";
 
 const userFollowersSchema = new mongoose.Schema({
     following:

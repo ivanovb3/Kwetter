@@ -40,4 +40,12 @@ build:
         manual:
           - src: 'src/**/*.js'
             dest: .
+    - image: ivanovb3/followers
+      context: followers
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - src: 'src/**/*.js'
+            dest: .
 

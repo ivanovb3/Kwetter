@@ -1,12 +1,12 @@
-import { ContentCreatedListener } from "../content-created-listener.js";
+import { UserCreatedListener } from "../user-created-listener.js";
 import { natsWrapper } from "../../nats-wrapper.js"
-import { Content } from "../../models/content.js";
+import { UserFollowers } from "../../models/user-following.js";
 import mongoose from "mongoose";
 import { jest } from '@jest/globals';
 
 
 const setup = async () => {
-    const listener = new ContentCreatedListener(natsWrapper.client, 'content:created', 'reacts-service');
+    const listener = new UserCreatedListener(natsWrapper.client, 'user:created', 'followers-service');
 
     const data = {
         id: new mongoose.Types.ObjectId().toHexString(),
@@ -26,9 +26,9 @@ it('creates a new content on received event', async () => {
 
     await listener.onMessage(data, msg);
 
-    const content = await Content.findById(data.id);
-    expect(content).toBeDefined();
-    expect(content.id).toEqual(data.id);
+    const user = await UserFollowers.findById(data.id);
+    expect(user).toBeDefined();
+    expect(user.id).toEqual(data.id);
 });
 
 it('acks the message', async () => {

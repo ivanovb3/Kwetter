@@ -1,10 +1,20 @@
 import { MongoMemoryServer } from 'mongodb-memory-server';
 import mongoose from 'mongoose';
 import { app } from "../app.js";
+import { jest } from '@jest/globals';
+import { natsWrapper } from '../nats-wrapper.js';
+
+jest.mock('../nats-wrapper.js')
+natsWrapper.client = {
+    publish: jest.fn().mockImplementation((subject, data, callback) => {
+        callback();
+    })
+}
 
 let mongo;
 
 beforeAll(async () => {
+    jest.clearAllMocks();
     process.env.JWT_KEY = 'kwettersecret';
     
     mongo = await MongoMemoryServer.create();

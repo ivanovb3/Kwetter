@@ -1,0 +1,47 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: organizations-depl
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: organizations
+  template:
+    metadata:
+      labels:
+        app: organizations
+    spec:
+      containers:
+        - name: organizations
+          image: ivanovb3/organizations
+          env:
+            - name: MONGO_URI
+              value: 'mongodb://organizations-mongo-srv:27017/organizations'
+            - name: JWT_KEY
+              valueFrom:  
+                secretKeyRef:
+                  name: jwt-secret
+                  key: JWT_KEY
+            - name: NATS_URL
+              value: 'http://nats-srv:4222'
+            - name: NATS_CLUSTER_ID
+              value: 'kwetter'
+            - name: NATS_CLIENT_ID
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.name
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: organizations-srv
+spec:
+  selector:
+    app: organizations
+  ports:
+    - name: organizations
+      protocol: TCP
+      port: 4000
+      targetPort: 4000

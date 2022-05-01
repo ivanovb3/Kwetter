@@ -58,4 +58,11 @@ spec:
                 name: profiles-srv
                 port:
                   number: 4000
+          - path: /api/organizations/?(.*)
+            pathType: Prefix
+            backend:
+              service:
+                name: organizations-srv
+                port:
+                  number: 4000
               

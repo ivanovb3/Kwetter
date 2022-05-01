@@ -5,6 +5,7 @@ metadata:
   annotations:
     kubernetes.io/ingress.class: nginx
     nginx.ingress.kubernetes.io/use-regex: 'true'
+    nginx.ingress.kubernetes.io/proxy-body-size: "50m"
     # nginx.ingress.kubernetes.io/rewrite-target: /$2
     # nginx.ingress.kubernetes.io/configuration-snippet: |
     #   rewrite ^(/dashboard)$ $1/ redirect;
@@ -48,6 +49,13 @@ spec:
             backend:
               service:
                 name: followers-srv
+                port:
+                  number: 4000
+          - path: /api/profiles/?(.*)
+            pathType: Prefix
+            backend:
+              service:
+                name: profiles-srv
                 port:
                   number: 4000
               

@@ -1,8 +1,6 @@
 import express from 'express'
 import { requireAuth, validateRequest, Publisher } from '@rikwetter/common';
 import { body } from 'express-validator'
-import { natsWrapper } from '../nats-wrapper.js';
-//import { uploadProfilePic } from '../middlewares/image-upload.js';
 import { UserProfile } from '../models/user-profile.js';
 
 import aws from "aws-sdk";
@@ -32,7 +30,7 @@ const upload = () =>  multer({
 
 const router = express.Router();
 
-router.post('/api/profiles', requireAuth, async (req, res) => {
+router.post('/api/profiles/picture', requireAuth, async (req, res) => {
 
     const uploadSingle = upload().single('image');
 

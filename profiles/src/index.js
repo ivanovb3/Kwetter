@@ -25,7 +25,7 @@ const start = async () => {
         new UserCreatedListener(natsWrapper.client, 'user:created', 'profiles-service').listen();
 
         await mongoose.connect(process.env.MONGO_URI);
-        console.log("Connected to MongoDb followers");
+        console.log("Connected to MongoDb profile info");
     } catch (err) {
         console.error(err)
     }

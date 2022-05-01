@@ -4,7 +4,7 @@ import { UserProfile } from '../models/user-profile.js';
 
 const router = express.Router();
 
-router.get('/api/profiles/:userId', requireAuth, async (req, res) => {
+router.get('/api/profiles/picture/:userId', requireAuth, async (req, res) => {
     //Find content to post a comment on
     const userId = req.params.userId;
 

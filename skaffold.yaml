@@ -48,4 +48,20 @@ build:
         manual:
           - src: 'src/**/*.js'
             dest: .
+    - image: ivanovb3/profiles
+      context: profiles
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - src: 'src/**/*.js'
+            dest: .
+    - image: ivanovb3/organizations
+      context: organizations
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - src: 'src/**/*.js'
+            dest: .
 

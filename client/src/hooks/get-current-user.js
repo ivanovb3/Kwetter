@@ -7,11 +7,11 @@ export default () => {
             await axios.get("/api/users/currentuser", {withCredentials: true})
                 .then((res) => {
                     user = res.data
-                    console.log(user)                    
+                    // console.log(user)                    
                     })
         }
         catch (err) {
-            console.log('Backend not working!')
+            console.log('Backend seems to not working!')
         }
         return user;
     }

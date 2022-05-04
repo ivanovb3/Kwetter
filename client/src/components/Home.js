@@ -1,18 +1,25 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import getCurrentUser from '../hooks/get-current-user'
+import NavBar from './NavBar'
 
 const Home = () => {
   const [user, setUser] = useState('')
-  getCurrentUser().then(result => setUser(result))
 
-    // useEffect(async () => {
-    //     setUser(getUser())
-    // })
-    // console.log('tipedal li si' + user)
+  const { getUser } = getCurrentUser()
+
+  useEffect(() => {
+    async function get() {
+      await getUser().then(result => setUser(result.currentUser))
+    }
+    get()
+  }, [getUser]);
 
   return (
-    <div>Home of {user.currentUser.email} na maikati putkata</div>
+    <div>
+      <NavBar {...user}/>
+      Home of {user.email}
+    </div>
   )
 }
 
-export default Home
+export default Home  

@@ -1,7 +1,7 @@
 // import axios from 'axios'
 import React, { useEffect, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
-import useRequest from '../hooks/use-request'
+import useRequest from '../../hooks/use-request'
 
 const SignIn = () => {
     let navigate = useNavigate()
@@ -45,21 +45,21 @@ const SignIn = () => {
         <div>
             <form onSubmit={onSubmit}>
                 <h1>Sign In</h1>
-                <div class="form-group">
-                    <label for="exampleInputEmail1">Email address</label>
-                    <input type="email" class="form-control" id="exampleInputEmail1"
+                <div className="form-group">
+                    <label htmlFor="exampleInputEmail1">Email address</label>
+                    <input type="email" className="form-control" id="exampleInputEmail1"
                         aria-describedby="emailHelp" placeholder="Email address"
                         value={email} onChange={(e) => setEmail(e.target.value)} />
                 </div>
-                <div class="form-group mt-3">
-                    <label for="exampleInputPassword1">Password</label>
-                    <input type="password" class="form-control" id="exampleInputPassword1"
+                <div className="form-group mt-3">
+                    <label htmlFor="exampleInputPassword1">Password</label>
+                    <input type="password" className="form-control" id="exampleInputPassword1"
                         placeholder="Password" value={password}
                         onChange={(e) => setPassword(e.target.value)} />
                 </div>
                 {errors}
                 {/* {errors.length > 0 && { errors }} */}
-                <button type="submit" class="btn btn-primary mt-3">Sign In</button>
+                <button type="submit" className="btn btn-primary mt-3">Sign In</button>
             </form>
             <div>
                 <h3>Don't have an accout?</h3>

@@ -15,9 +15,9 @@ spec:
       containers:
         - name: client
           image: ivanovb3/client
-          # env:
-          #   - name: WDS_SOCKET_PORT
-          #     value: 0
+          env:
+            - name: WDS_SOCKET_PORT
+              value: '0'
 
 ---
 apiVersion: v1

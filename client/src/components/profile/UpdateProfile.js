@@ -17,16 +17,18 @@ const UpdateProfile = (props) => {
         e.preventDefault()
 
         await doRequest()
+
+        window.location.reload(false)
     }
 
     useEffect(() => {
         if (props.name) {
-          setName(props.name);
+            setName(props.name);
         }
         if (props.bio) {
             setBio(props.bio);
-          }
-      }, [props.name, props.bio]);
+        }
+    }, [props.name, props.bio]);
 
     return (
         <form onSubmit={onSubmit}>

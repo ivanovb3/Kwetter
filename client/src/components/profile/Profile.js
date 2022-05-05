@@ -25,7 +25,7 @@ const Profile = () => {
       })
     }
     get()
-  }, [getUser, doRequestId]);
+  }, []);
 
   return (
     <div>

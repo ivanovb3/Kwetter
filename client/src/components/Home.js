@@ -49,12 +49,12 @@ const Home = () => {
         <div className="row">
           <div className="col-sm">
             <div className='border border-secondary rounded'>
-              <h4>Followers</h4>
+              <h4>Followers: {followersProfiles.length}</h4>
               <hr/>
               <Followers followers={followersProfiles} />
             </div>
             <div className='border border-secondary rounded'>
-              <h4>Following</h4>
+              <h4>Following: {followingProfiles.length}</h4>
               <hr/>
               <Following following={followingProfiles} />
             </div>

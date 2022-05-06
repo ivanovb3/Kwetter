@@ -29,11 +29,11 @@ const Profile = () => {
 
   return (
     <div>
-      <NavBar {...user}/>
+      <NavBar {...user}/>      
       <h2>Profile of {user.email}</h2>
       <h3>Name: {userProfile.name}</h3>
       <h3>Bio: {userProfile.bio}</h3>
-      < ProfilePic picture={userProfile.pictureURL}/>
+      <div style={{width:250, marginBottom: 'auto'}}><ProfilePic picture={userProfile.pictureURL}/></div> 
       < UpdateProfile name={userProfile.name} bio={userProfile.bio} />
     </div>
   )

@@ -1,8 +1,13 @@
 import React from 'react'
 
 const ProfilePic = (props) => {
-  let { picture } = props
-  let image = picture ? <img src={props.picture} alt="..." className="img-thumbnail w-25 h-35 p-3" /> : <img src={'default-user.jpg'} alt="..." className="img-thumbnail w-25 h-35 p-3" />
+  let picture = null;
+  if(props.picture){
+    picture = props.picture
+    console.log('da')
+  }
+  let image = picture ? <img src={props.picture} alt="..." className="" style={{borderRadius: 50, maxWidth: 100}} /> : 
+  <img src={'default-user.jpg'} alt="..." style={{borderRadius: 50, padding: 4}} className="w-100 h-60" />
     return (
     <div>
         {image}

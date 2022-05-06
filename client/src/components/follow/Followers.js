@@ -1,4 +1,5 @@
 import React from 'react'
+import ProfilePic from '../profile/ProfilePic'
 
 const Followers = (props) => {
 
@@ -11,11 +12,9 @@ const Followers = (props) => {
   if (users) {
     for (let i = 0; i < users.length; i++) {
       followersDiv.push(
-        <div key={users[i].id} className="">
+        <div key={users[i].id} className="d-flex">
+          <div style={{width:50, marginBottom: 'auto'}}><ProfilePic picture={users[i].pictureURL}/></div> 
             <h4 className=''>{users[i].name}</h4>
-            {/* <img src="https://bootdey.com/img/Content/avatar/avatar1.png" alt="User Avatar" className="media-object pull-left" /> */}
-            {/* <h4>{users[i].name}</h4> */}
-            {/* <button type="button" className="btn btn-sm btn-danger pull-right" value={users[i].id} onClick={handleFollow}><i className="fa fa-close-round"></i>Follow</button> */}
         </div>
       )
     }

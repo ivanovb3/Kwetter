@@ -30,7 +30,7 @@ it('shows all people a user follows', async () => {
         .set('Cookie', getAuthCookieWithId(user.id))
         .expect(200)
 
-    expect(responseUsers.body[0].userId).toEqual(userToBeFollowed.id);
+    expect(responseUsers.body[0]).toEqual(userToBeFollowed.id);
 })
 
 it('shows all people that follow a user', async () => {
@@ -60,7 +60,7 @@ it('shows all people that follow a user', async () => {
         .set('Cookie', getAuthCookieWithId(userToBeFollowed.id))
         .expect(200)
 
-    expect(responseUsers.body[0].userId).toEqual(user.id);
+    expect(responseUsers.body[0]).toEqual(user.id);
 })
 
 it('show recommendation for new following', async () => {

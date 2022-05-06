@@ -1,11 +1,11 @@
 import React from 'react'
 import axios from 'axios'
 
-const Recommended = (props) => {
+const Following = (props) => {
 
   let users = []
   if(props){
-    users = props.explore
+    users = props.following
   }
 
   let handleFollow = async (e) => {
@@ -15,15 +15,15 @@ const Recommended = (props) => {
     await axios.post('/api/followers', {userId: id}).then(() => window.location.reload(false))
   }
 
-  let recommended = []
+  let following = []
   if (users) {
     for (let i = 0; i < users.length; i++) {
-      recommended.push(
+      following.push(
         <div key={users[i].id} className="d-flex">
             <h4 className=''>{users[i].name}</h4>
             {/* <img src="https://bootdey.com/img/Content/avatar/avatar1.png" alt="User Avatar" className="media-object pull-left" /> */}
             {/* <h4>{users[i].name}</h4> */}
-            <button type="button" className="btn btn-sm btn-danger pull-right float-right" value={users[i].id} onClick={handleFollow}><i className="fa fa-close-round"></i>Follow</button>
+            <button type="button" className="btn btn-sm btn-danger pull-right float-right" value={users[i].id} onClick={handleFollow}><i className="fa fa-close-round"></i>Unfollow</button>
         </div>
       )
     }
@@ -31,9 +31,9 @@ const Recommended = (props) => {
 
   return (
     <div className="" >
-      {recommended}
+      {following}
     </div>
   )
 }
 
-export default Recommended
+export default Following

@@ -1,39 +1,16 @@
-import React, { useState, useEffect } from 'react'
-import useRequest from '../../hooks/use-request'
+import React from 'react'
 
 const Followers = (props) => {
 
-  const [users, setUsers] = useState('')
+  let users = []
+  if(props){
+    users = props.followers
+  }
 
-  let { doRequest } = useRequest({
-    url: `/api/followers/myfollowers`,
-    method: 'get',
-    // onSuccess: () => {navigate('/home')}//{ <Navigate to="/home" replace /> }
-  })
-  let { doRequestId } = useRequest({
-    url: `/api/profiles/`,
-    method: 'get',
-    // onSuccess: () => {navigate('/home')}//{ <Navigate to="/home" replace /> }
-  })
-
-  useEffect(() => {
-    async function get() {
-      await doRequest().then(async (result) => {
-        let followers = []
-        for (let i = 0; i < result.length; i++) {
-          const response = await doRequestId(result[i].userId)
-          followers.push(response);
-        }
-        setUsers(followers)
-      })
-    }
-    get()
-  }, []);
-
-  let followers = []
+  let followersDiv = []
   if (users) {
     for (let i = 0; i < users.length; i++) {
-      followers.push(
+      followersDiv.push(
         <div key={users[i].id} className="">
             <h4 className=''>{users[i].name}</h4>
             {/* <img src="https://bootdey.com/img/Content/avatar/avatar1.png" alt="User Avatar" className="media-object pull-left" /> */}
@@ -46,7 +23,7 @@ const Followers = (props) => {
 
   return (
     <div className="" >
-      {followers}
+      {followersDiv}
     </div>
   )
 }

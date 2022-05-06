@@ -16,7 +16,7 @@ router.get('/api/profiles/:userId', async (req, res) => {
 router.post('/api/profiles/get', requireAuth, async (req, res) => {
     const { userIds } = req.body;
 
-    const profiles = await UserProfile.find({id: {$in: userIds}})
+    const profiles = await UserProfile.find({_id: {$in: userIds}})
 
     res.status(201).send(profiles);
 });

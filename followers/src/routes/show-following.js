@@ -11,7 +11,12 @@ router.get('/api/followers', requireAuth, async (req, res) => {
 
     const usersFollowed = currentUserDoc.following;
 
-    res.status(200).send(usersFollowed);
+    let following = []
+    for(let i = 0; i < usersFollowed.length; i++){
+        following.push(usersFollowed[i].userId)
+    }
+
+    res.status(200).send(following);
 })
 
 router.get('/api/followers/myfollowers', requireAuth, async (req, res) => {

@@ -15,7 +15,7 @@ router.post('/api/tweets/get', requireAuth, async (req, res) => {
 
     const tweets = await Tweet.find({userId: {$in: userIds}})
 
-    res.status(201).send(tweets);
+    res.status(200).send(tweets);
 });
 
 export { router as showAllTweetsRouter };

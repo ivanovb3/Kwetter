@@ -13,7 +13,7 @@ router.get('/api/tweets', async (req, res) => {
 router.post('/api/tweets/get', requireAuth, async (req, res) => {
     const { userIds } = req.body;
 
-    const tweets = await Tweet.find({userId: {$in: userIds}})
+    const tweets = await Tweet.find({userId: {$in: userIds}}).sort({createdAt: -1})
 
     res.status(200).send(tweets);
 });

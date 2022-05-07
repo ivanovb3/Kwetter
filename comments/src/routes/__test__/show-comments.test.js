@@ -83,10 +83,10 @@ it('shows all comments of an array of tweets', async () => {
         .post(`/api/comments/get`)
         .set('Cookie', getAuthCookie())
         .send({
-            tweetIds: [tweet1.id, tweet2.id]
+            tweetIds: [tweet1.id]
         })
         .expect(200);
 
-    expect(tweetComments.body.length).toEqual(2);
+    expect(tweetComments.body.length).toEqual(1);
 
 })

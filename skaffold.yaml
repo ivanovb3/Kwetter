@@ -64,4 +64,12 @@ build:
         manual:
           - src: 'src/**/*.js'
             dest: .
+    - image: ivanovb3/client
+      context: client
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - src: 'src/**/*.js'
+            dest: .
 

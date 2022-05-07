@@ -40,3 +40,53 @@ it('shows all comments of a tweet', async () => {
     expect(tweet1Comments.body.length).toEqual(0);
 
 })
+
+it('shows all comments of an array of tweets', async () => {
+    //Create 2 tweets 
+    const tweet1 = new Tweet();
+    await tweet1.save();
+
+    const tweet2 = new Tweet();
+    await tweet2.save();
+
+    expect(tweet1.id).not.toEqual(tweet2.id)
+    //Write comment to tweet2
+    await request(app)
+        .post('/api/comments')
+        .set('Cookie', getAuthCookie())
+        .send({
+            content: 'This is a comment',
+            tweetId: tweet2.id
+        })
+        .expect(201);
+
+    await request(app)
+        .post('/api/comments')
+        .set('Cookie', getAuthCookie())
+        .send({
+            content: 'This is another comment',
+            tweetId: tweet2.id
+        })
+        .expect(201);
+
+    await request(app)
+        .post('/api/comments')
+        .set('Cookie', getAuthCookie())
+        .send({
+            content: 'This is yet another comment',
+            tweetId: tweet1.id
+        })
+        .expect(201);
+    
+    //Check if tweet2 has a comment - it should have 1
+    const tweetComments = await request(app)
+        .post(`/api/comments/get`)
+        .set('Cookie', getAuthCookie())
+        .send({
+            tweetIds: [tweet1.id]
+        })
+        .expect(200);
+
+    expect(tweetComments.body.length).toEqual(1);
+
+})

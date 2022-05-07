@@ -2,6 +2,7 @@ import express from 'express'
 import 'express-async-errors'
 import bodyParser from 'body-parser'
 import cookieSession from 'cookie-session'
+import cors from 'cors'
 
 import { currentUserRouter } from './routes/current-user.js';
 import { signinRouter } from './routes/signin.js';
@@ -13,10 +14,11 @@ const app = express();
 
 app.set('trust proxy', true);
 app.use(bodyParser.json());
+app.use(cors())
 app.use(
     cookieSession({
         signed: false,
-        secure: process.env.NODE_ENV !== 'test'
+        // secure: process.env.NODE_ENV !== 'test'
     })
 );
 

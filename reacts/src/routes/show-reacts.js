@@ -17,5 +17,21 @@ router.get('/api/reacts/:contentId', requireAuth, async (req, res) => {
 
     res.status(200).send(contentReacts);
 })
+router.post('/api/reacts/get', requireAuth, async (req, res) => {
+    const { contentIds } = req.body;
+
+    const reacts = await Content.find({_id: {$in: contentIds}})
+
+    // const tweets = comments.map((o) => o.tweetId)
+    // const tweetsUnique = Array.from(new Set(tweets));
+
+    // let toReturn = []
+    // for(let i = 0; i < tweetsUnique.length ; i++){
+    //     const id = tweetsUnique[i]
+    //     let tweetComments = await Comment.find({tweetId: id})
+    //     toReturn.push({ id: id, comments: tweetComments })
+    // }
+    res.status(200).send(reacts);
+});
 
 export { router as showReactRouter };

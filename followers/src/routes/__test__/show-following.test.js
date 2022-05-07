@@ -30,7 +30,7 @@ it('shows all people a user follows', async () => {
         .set('Cookie', getAuthCookieWithId(user.id))
         .expect(200)
 
-    expect(responseUsers.body[0].userId).toEqual(userToBeFollowed.id);
+    expect(responseUsers.body[0]).toEqual(userToBeFollowed.id);
 })
 
 it('shows all people that follow a user', async () => {
@@ -60,5 +60,36 @@ it('shows all people that follow a user', async () => {
         .set('Cookie', getAuthCookieWithId(userToBeFollowed.id))
         .expect(200)
 
-    expect(responseUsers.body[0].userId).toEqual(user.id);
+    expect(responseUsers.body[0]).toEqual(user.id);
+})
+
+it('show recommendation for new following', async () => {
+    const user = new UserFollowers();
+    await user.save()
+    expect(user.following.length).toEqual(0);
+    expect(user.followers.length).toEqual(0);
+
+    const userToBeFollowed = new UserFollowers();
+    await userToBeFollowed.save()
+
+    const userRecommended = new UserFollowers();
+    await userRecommended.save()
+
+    expect(userToBeFollowed.following.length).toEqual(0);
+    expect(userToBeFollowed.followers.length).toEqual(0);
+
+    await request(app)
+        .post('/api/followers')
+        .set('Cookie', getAuthCookieWithId(user.id))
+        .send({
+            userId: userToBeFollowed.id
+        })
+        .expect(201);
+
+    const responseUsers = await request(app)
+        .get('/api/followers/explore')
+        .set('Cookie', getAuthCookieWithId(user.id))
+        .expect(200)
+
+    expect(responseUsers.body[0]).toEqual(userRecommended.id);
 })

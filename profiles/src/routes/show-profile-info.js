@@ -1,5 +1,6 @@
 import express from 'express'
 import { UserProfile } from '../models/user-profile.js'
+import { requireAuth } from '@rikwetter/common';
 
 const router = express.Router()
 
@@ -12,5 +13,12 @@ router.get('/api/profiles/:userId', async (req, res) => {
 
     res.send(user);
 })
+router.post('/api/profiles/get', requireAuth, async (req, res) => {
+    const { userIds } = req.body;
+
+    const profiles = await UserProfile.find({_id: {$in: userIds}})
+
+    res.status(201).send(profiles);
+});
 
 export { router as showUserInfoRouter };

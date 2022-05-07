@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import getCurrentUser from '../hooks/get-current-user'
 import NavBar from './NavBar'
-import useRequest from '../hooks/use-request'
 import customRequest from '../hooks/custom-request'
 import Recommended from './follow/Recommended'
 import Followers from './follow/Followers'
@@ -13,10 +12,10 @@ const Home = () => {
   const [user, setUser] = useState('')
   const [followingProfiles, setFollowingProfiles] = useState('')
   const [followersProfiles, setFollowersProfiles] = useState('')
-  //const [allProfiles, setFollowersProfiles] = useState('')
   const [tweets, setTweets] = useState('')
   const [comments, setComments] = useState('')
   const [explore, setExplore] = useState('')  //recommended users
+  const [reacts, setReacts] = useState('')
 
 
   const { getCurrentUserProfile } = getCurrentUser()
@@ -28,16 +27,23 @@ const Home = () => {
       await getCurrentUserProfile().then(async (resultUser) => {
         setUser(resultUser.data)
 
-        await doCustomGetRequest('/api/followers').then(async (result) => {
-          await doCustomPostRequest('/api/profiles/get', { userIds: result }).then(result => setFollowingProfiles(result))
+        await doCustomGetRequest('/api/followers').then(async (resultFollowing) => {
+          await doCustomPostRequest('/api/profiles/get', { userIds: resultFollowing }).then(result => setFollowingProfiles(result))
 
-          await doCustomPostRequest('/api/tweets/get', { userIds: result.concat(resultUser.data.id) }).then(async (result) => {
-            setTweets(result)
+          await doCustomPostRequest('/api/tweets/get', { userIds: resultFollowing.concat(resultUser.data.id) }).then(async (resultTweets) => {
+            setTweets(resultTweets)
             let tweetIds = []
-            for (const r of result) {
+            for (const r of resultTweets) {
               tweetIds.push(r.id)
             }
-            await doCustomPostRequest('/api/comments/get', { tweetIds: tweetIds }).then(result => setComments(result))
+            await doCustomPostRequest('/api/comments/get', { tweetIds: tweetIds }).then(async (resultComments) => {
+              setComments(resultComments)
+              let commentIds = []
+              for (const r of resultComments) {
+               commentIds.push(r.id)
+              }
+              await doCustomPostRequest('/api/reacts/get', { contentIds: commentIds.concat(tweetIds) }).then(resultReacts => setReacts(resultReacts))
+            })
 
           })
         })
@@ -76,7 +82,7 @@ const Home = () => {
           <div className="col-sm">
             Home of {user.name}
             <NewTweetForm />
-            <Tweet tweets={tweets} users={followingProfiles.concat(user)} restUsers={explore} comments={comments} />
+            <Tweet tweets={tweets} users={followingProfiles.concat(user)} restUsers={explore} comments={comments} reacts={reacts} currentUser={user} />
           </div>
           <div className="col-sm">
             <div className='border border-secondary rounded'>

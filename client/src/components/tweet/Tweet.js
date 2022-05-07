@@ -1,6 +1,8 @@
-import React from 'react'
+import React, {useState} from 'react'
 import NewCommentForm from './NewCommentForm'
 import Comment from './Comment'
+import HeartReact from './HeartReact'
+import { timeSince } from '../../utils/timeSince'
 
 const Tweet = (props) => {
 
@@ -8,49 +10,23 @@ const Tweet = (props) => {
     let users = []
     let comments = []
     let restUsers = []
+    let reacts = []
+    let currentUser = null
 
-    if (props.tweets && props.users && props.comments && props.restUsers) {
+    if (props.tweets && props.users && props.comments && props.restUsers && props.reacts) {
         tweets = props.tweets
         users = props.users
         comments = props.comments
         restUsers = props.restUsers
-        // console.log(props.tweets[0].createdAt)
-    }
-
-    function timeSince(date) {
-
-        var seconds = Math.floor((new Date() - new Date(date)) / 1000);
-
-        var interval = seconds / 31536000;
-
-        if (interval > 1) {
-            return Math.floor(interval) + " years";
-        }
-        interval = seconds / 2592000;
-        if (interval > 1) {
-            return Math.floor(interval) + " months";
-        }
-        interval = seconds / 86400;
-        if (interval > 1) {
-            return Math.floor(interval) + " days";
-        }
-        interval = seconds / 3600;
-        if (interval > 1) {
-            return Math.floor(interval) + " hours";
-        }
-        interval = seconds / 60;
-        if (interval > 1) {
-            return Math.floor(interval) + " minutes";
-        }
-        return "just now"//Math.floor(seconds) + " seconds";
+        reacts = props.reacts
+        currentUser = props.currentUser
     }
 
     let tweetsDiv = []
     if (tweets) {
         for (let i = 0; i < tweets.length; i++) {
             let user = users.find(x => x.id === tweets[i].userId)
-            let commentsTweet = comments.filter(x => x.tweetId === tweets[i].id)
-            //console.log(commentsTweet)
+            let commentsTweet = comments.filter(x => x.tweetId === tweets[i].id)            
             tweetsDiv.push(
                 <div key={tweets[i].id} className='border border-secondary p-2'>
                     <div className='mb-3'>
@@ -58,9 +34,10 @@ const Tweet = (props) => {
                             {user.name} <div className='text-muted float-right' style={{ marginLeft: 'auto' }}>{timeSince(tweets[i].createdAt)}</div>
                         </div>
                         {tweets[i].content} <br />
+                        <HeartReact reacts={reacts} userId={currentUser.id} contentId={tweets[i].id} />
                     </div>
                     <NewCommentForm tweetId={tweets[i].id} />
-                    <Comment comments={commentsTweet} users={users.concat(restUsers)} tweeter={user} />
+                    <Comment comments={commentsTweet} users={users.concat(restUsers)} tweeter={user} reacts={reacts} currentUser={currentUser}/>
                 </div>
             )
         }

@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react'
+import { useParams } from 'react-router-dom'
 import getCurrentUser from '../../hooks/get-current-user'
 import NavBar from '../NavBar'
 import useRequest from '../../hooks/use-request'
@@ -9,32 +10,29 @@ const Profile = () => {
   const [user, setUser] = useState('')
   const [userProfile, setUserProfile] = useState('')
 
-  const { getUser } = getCurrentUser()
+  const { getCurrentUserProfile } = getCurrentUser()
+  const { id } = useParams();
 
   let { doRequestId } = useRequest({
     url: `/api/profiles/`,
-    method: 'get',
-    // onSuccess: () => {navigate('/home')}//{ <Navigate to="/home" replace /> }
+    method: 'get'
 })
 
   useEffect(() => {
     async function get() {
-      await getUser().then(async( result ) => {
-        setUser(result.currentUser) 
-        await doRequestId(result.currentUser.id).then(result=> setUserProfile(result))
-      })
+      await doRequestId(id).then(result => setUserProfile(result))
+      await getCurrentUserProfile().then(result => setUser(result.data))
     }
     get()
   }, []);
 
   return (
     <div>
-      <NavBar {...user}/>      
-      <h2>Profile of {user.email}</h2>
+      <NavBar {...userProfile}/>      
       <h3>Name: {userProfile.name}</h3>
       <h3>Bio: {userProfile.bio}</h3>
       <div style={{width:250, marginBottom: 'auto'}}><ProfilePic picture={userProfile.pictureURL}/></div> 
-      < UpdateProfile name={userProfile.name} bio={userProfile.bio} />
+      {user.id === userProfile.id ? < UpdateProfile name={userProfile.name} bio={userProfile.bio} /> : null}
     </div>
   )
 }

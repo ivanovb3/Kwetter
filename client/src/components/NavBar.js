@@ -15,6 +15,7 @@ const NavBar = (props) => {
 
     let logInOutLink = user.id ? <Link to='/login' onClick={handleLogOut} className='nav-link'>Log out</Link> : null//<Link to='/login' className='nav-link'>Log in</Link>
 
+    const profileLink = `/profile/${user.id}`
     return (
         <nav className="navbar navbar-expand-lg navbar-light bg-light">
             <a className="navbar-brand" href="/home">Kwetter</a>
@@ -27,7 +28,7 @@ const NavBar = (props) => {
                         <Link to='/home' className="nav-link" >Home</Link>
                     </li>
                     <li className="nav-item">
-                        <Link to='/profile' className="nav-link" >Profile</Link>
+                        <Link to={profileLink} className="nav-link" >Profile</Link>
                     </li>
                 </ul>
                 <ul className='navbar-nav navbar-right'>

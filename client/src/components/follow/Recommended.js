@@ -1,6 +1,6 @@
 import React from 'react'
 import axios from 'axios'
-import ProfilePic from '../profile/ProfilePic'
+import {ProfilePic} from '../profile/ProfilePic'
 
 const Recommended = (props) => {
 

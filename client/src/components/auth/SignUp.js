@@ -13,7 +13,7 @@ const SignUp = () => {
         body: {
             email, password
         },
-        onSuccess: () => {navigate('/profile')}
+        onSuccess: (response) => {navigate(`/profile/${response.id}`)}
     })
 
     const onSubmit = async (e) => {

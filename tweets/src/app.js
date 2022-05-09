@@ -10,7 +10,7 @@ import { showTweetRouter } from './routes/show-tweet.js';
 import { showAllTweetsRouter } from './routes/show-all-tweets.js';
 import { updateTweetRouter } from './routes/update-tweet.js';
 
-const app = express();
+const app = express()
 
 app.set('trust proxy', true);
 app.use(bodyParser.json());

@@ -1,5 +1,5 @@
 import React from 'react'
-import ProfilePic from '../profile/ProfilePic'
+import {ProfilePic} from '../profile/ProfilePic'
 import { useNavigate } from 'react-router-dom'
 
 const Followers = (props) => {

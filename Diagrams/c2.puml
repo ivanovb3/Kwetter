@@ -8,12 +8,14 @@ Container(frontendmods, "Web Application", "JavaScript, React", "The admin and m
 Container(gateway, "API Gateway", "Ingress", "Service discovery, load balancing")
 
 System_Boundary(c1, "Microservice system") {
-    Container(userservice, "User Service", "JavaScript", "Handles access with users information", $tags="microservice")
+    Container(userservice, "User Profile Service", "JavaScript", "Handles access with users information", $tags="microservice")
     Container(tweetservice, "Tweet Service", "JavaScript", "Handles communication with tweets", $tags="microservice")
     Container(followerservice, "Follower Service", "JavaScript", "Handles communication with followers", $tags="microservice")
     Container(authservice, "Auth Service", "JavaScript", "Handles user authentication", $tags="microservice")
     Container(reactservice, "React Service", "JavaScript", "Handles reacts", $tags="microservice")
-    Container(trendservice, "Trend Service", "JavaScript", "Handles trends", $tags="microservice")
+    Container(commentservice, "Comment Service", "JavaScript", "Handles comments", $tags="microservice")
+    Container(organizationservice, "Organization Service", "JavaScript", "Handles user's roles", $tags="microservice")
+    ' Container(commentservice, " Service", "JavaScript", "Handles trends", $tags="microservice")
 
     Container(eventbus, "Event Bus", "NATS", "Communication between microservices")  
 }
@@ -24,15 +26,17 @@ Rel(gateway, userservice, "Request")
 Rel(gateway, tweetservice, "Request")
 Rel(gateway, followerservice, "Request")
 Rel(gateway, reactservice, "Request")
-Rel(gateway, trendservice, "Request")
+Rel(gateway, commentservice, "Request")
 Rel(gateway, authservice, "Request")
+Rel(gateway, organizationservice, "Request")
 
 Rel(userservice, eventbus, "Event")
 Rel(tweetservice, eventbus, "Event")
 Rel(followerservice, eventbus, "Event")
-Rel(trendservice, eventbus, "Event")
+Rel(commentservice, eventbus, "Event")
 Rel(reactservice, eventbus, "Event")
 Rel(authservice, eventbus, "Event")
+Rel(organizationservice, eventbus, "Event")
 
 SHOW_LEGEND()
 @enduml

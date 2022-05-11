@@ -3,14 +3,16 @@ import { useParams } from 'react-router-dom'
 import getCurrentUser from '../../hooks/get-current-user'
 import NavBar from '../NavBar'
 import useRequest from '../../hooks/use-request'
-import ProfilePic from './ProfilePic'
+import {ProfilePagePic} from './ProfilePic'
 import UpdateProfile from './UpdateProfile'
+import UploadProfilePic from './UploadProfilePic'
 
 const Profile = () => {
   const [user, setUser] = useState('')
   const [userProfile, setUserProfile] = useState('')
+  const [role, setRole] = useState('')
 
-  const { getCurrentUserProfile } = getCurrentUser()
+  const { getCurrentUserProfile, getCurrentUserRole } = getCurrentUser()
   const { id } = useParams();
 
   let { doRequestId } = useRequest({
@@ -22,17 +24,21 @@ const Profile = () => {
     async function get() {
       await doRequestId(id).then(result => setUserProfile(result))
       await getCurrentUserProfile().then(result => setUser(result.data))
+      await getCurrentUserRole().then(result => setRole(result));
     }
     get()
   }, []);
 
   return (
     <div>
-      <NavBar {...userProfile}/>      
+      <NavBar user={role}/>      
       <h3>Name: {userProfile.name}</h3>
       <h3>Bio: {userProfile.bio}</h3>
-      <div style={{width:250, marginBottom: 'auto'}}><ProfilePic picture={userProfile.pictureURL}/></div> 
-      {user.id === userProfile.id ? < UpdateProfile name={userProfile.name} bio={userProfile.bio} /> : null}
+      <div style={{width:250, marginBottom: 'auto'}}><ProfilePagePic picture={userProfile.pictureURL}/></div> 
+      {user.id === userProfile.id ? <div>
+        <UpdateProfile name={userProfile.name} bio={userProfile.bio} /> <br/> 
+        <UploadProfilePic />
+        </div> : null}
     </div>
   )
 }

@@ -31,7 +31,18 @@ export default () => {
         }
         return user;
     }
+    const getCurrentUserRole = async () => {
+        let role = null
+        try {
+            await axios.get("/api/organizations", {withCredentials: true}).then(res => role = res.data);
+        }
+        catch (err) {
+            console.log('Backend seems to not working!')
+        }
+        return role;
+    }
 
 
-    return {getUser, getCurrentUserProfile}
+
+    return {getUser, getCurrentUserProfile, getCurrentUserRole}
 }

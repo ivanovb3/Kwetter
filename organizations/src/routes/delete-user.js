@@ -30,7 +30,10 @@ router.post('/api/organizations/delete', requireAuth, [
             })
             return res.status(200).send({});
         }
-        return res.sendStatus(401).send('Moderator cannot delete another user of same or higher rank');
+        //return res.sendStatus(401).send('Moderator cannot delete another user of same or higher rank');
+        const error = new Error('Moderator cannot delete another user of same or higher rank');
+        error.reasons = [{ msg: "Moderator cannot delete another user of same or higher rank", param: 'delete' }];
+        throw error;
     }
     if (currentUserDoc.role == 'ADMIN') {
         await new Publisher(natsWrapper.client, 'user:deleted').publish({   

@@ -1,6 +1,6 @@
 import React from 'react'
 import axios from 'axios'
-import ProfilePic from '../profile/ProfilePic'
+import {ProfilePic} from '../profile/ProfilePic'
 
 const Recommended = (props) => {
 
@@ -22,7 +22,7 @@ const Recommended = (props) => {
       recommended.push(
         <div key={users[i].id} className="d-flex" style={{marginTop: 15}}>
           <div style={{width:50, marginBottom: 'auto'}}><ProfilePic picture={users[i].pictureURL}/></div>            
-            <h4 className='float-left' style={{marginRigth: 'auto', marginBottom: 'auto'}}>{users[i].name}</h4>
+            <h4 className='float-left' style={{marginRigth: 'auto', marginBottom: 'auto', width: '70%'}}>{users[i].name}</h4>
             <button type="button" className="btn btn-sm btn-info pull-right float-right" style={{marginLeft: 'auto', marginBottom: 7, marginRight: 3}} value={users[i].id} onClick={handleFollow}><i className="fa fa-close-round"></i>Follow</button>
         </div>
       )

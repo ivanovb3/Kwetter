@@ -54,7 +54,7 @@ it('returns an error if the user does not exist', async () => {
         .expect(404);
 })
 
-it('moderator tries to delete another moderator returs 401', async () => {
+it('moderator tries to delete another moderator returs unauthorized', async () => {
     const userMod = new UserOrganizations();
     userMod.role = 'MODERATOR';
     await userMod.save();
@@ -69,7 +69,9 @@ it('moderator tries to delete another moderator returs 401', async () => {
         .send({
             userId: userModerator.id
         })
-        .expect(401);
+        .expect(400);
+
+    expect(response.body.errors[0].message).toEqual('Moderator cannot delete another user of same or higher rank')
 });
 
 it('moderator deletes user emits message to system', async () => {

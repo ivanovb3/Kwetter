@@ -3,7 +3,13 @@ import { Link } from 'react-router-dom'
 import useRequest from '../hooks/use-request'
 
 const NavBar = (props) => {
-    let user = props
+    let user = { id: '', role: '' }
+    // let role = ''
+    if (props.user) {
+        user = props.user
+        // role = props.role
+    }
+
     const { doRequest } = useRequest({
         url: '/api/users/signout',
         method: 'post'
@@ -13,7 +19,8 @@ const NavBar = (props) => {
         await doRequest();
     }
 
-    let logInOutLink = user.id ? <Link to='/login' onClick={handleLogOut} className='nav-link'>Log out</Link> : null//<Link to='/login' className='nav-link'>Log in</Link>
+    // let logInOutLink = user.id ? <Link to='/login' onClick={handleLogOut} className='nav-link'>Log out</Link> : null//<Link to='/login' className='nav-link'>Log in</Link>
+    let moderate = user.role === 'MODERATOR' || user.role === 'ADMIN' ? <Link to='../../moderate' className='nav-link'>Moderate</Link> : null
 
     const profileLink = `/profile/${user.id}`
     return (
@@ -33,8 +40,13 @@ const NavBar = (props) => {
                 </ul>
                 <ul className='navbar-nav navbar-right'>
                     <li className="nav-item">
-                        {logInOutLink}
+                        {moderate}
                     </li>
+                    <li className="nav-item">
+                        <Link to='/login' onClick={handleLogOut} className='nav-link'>Log out</Link>
+                        {/* {logInOutLink} */}
+                    </li>
+
                     {/* <li className="nav-item">
                         <a className="nav-link" href="#">Pricing</a>
                     </li>

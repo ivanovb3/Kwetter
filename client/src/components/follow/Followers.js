@@ -22,7 +22,7 @@ const Followers = (props) => {
       followersDiv.push(
         <div key={users[i].id} className="d-flex" onClick={() => linkToProfile(users[i].id)} >
           <div style={{width:50, marginBottom: 'auto'}}><ProfilePic picture={users[i].pictureURL}/></div> 
-            <h4 className=''>{users[i].name}</h4>
+            <h4 style={{width: '70%'}}>{users[i].name}</h4>
         </div>
       )
     }

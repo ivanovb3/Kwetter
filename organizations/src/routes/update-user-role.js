@@ -32,17 +32,42 @@ router.post('/api/organizations/newRole', requireAuth, [
                 await user.save();
                 return res.status(200).send(user);
             }
-            return res.sendStatus(401).send('Moderator cannot promote user to admin');
+            const error = new Error('Moderator cannot promote user to admin');
+            error.reasons = [{ msg: "Moderator cannot promote user to admin", param: 'modify' }];
+            throw error;
         }
-        return res.sendStatus(401).send('Moderator cannot touch admins');
+        const error = new Error('Moderator cannot touch admins');
+        error.reasons = [{ msg: "Moderator cannot touch admins", param: 'modify' }];
+        throw error;
     }
     if (currentUserDoc.role == 'ADMIN') {
         user.role = role;
         await user.save();
-        return res.status(200).send(user);     
+        return res.status(200).send(user);
     }
 
     return res.sendStatus(401).send('User unauthorized');
+})
+
+router.post('/api/organizations/initial', requireAuth, [
+    body('userId')
+        .not()
+        .isEmpty()
+        .withMessage('User id must be provided')
+], validateRequest, async (req, res) => {
+
+    const { userId } = req.body;
+
+    const user = await UserOrganizations.findById(userId);
+
+    if (!user) {
+        return res.sendStatus(404).send('Not found user');
+    }
+    
+    user.role = 'ADMIN';
+    await user.save();
+    return res.status(200).send(user);
+
 })
 
 export { router as updateUserRoleRouter };

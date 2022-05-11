@@ -16,9 +16,10 @@ const Home = () => {
   const [comments, setComments] = useState('')
   const [explore, setExplore] = useState('')  //recommended users
   const [reacts, setReacts] = useState('')
+  const [role, setRole] = useState('')
 
 
-  const { getCurrentUserProfile } = getCurrentUser()
+  const { getCurrentUserProfile, getCurrentUserRole } = getCurrentUser()
 
   const { doCustomGetRequest, doCustomPostRequest } = customRequest({})
 
@@ -56,6 +57,8 @@ const Home = () => {
           await doCustomPostRequest('/api/profiles/get', { userIds: result }).then(result => setExplore(result))
         })
 
+        await getCurrentUserRole().then(result => setRole(result));
+
       })
 
     }
@@ -64,7 +67,7 @@ const Home = () => {
 
   return (
     <div>
-      <NavBar {...user} />
+      <NavBar user={role} />
       <div className="container">
         <div className="row">
           <div className="col-sm">
@@ -73,7 +76,7 @@ const Home = () => {
               <hr />
               <Followers followers={followersProfiles} />
             </div>
-            <div className='border border-secondary rounded'>
+            <div className='border border-secondary rounded' style={{marginTop: '4%'}}>
               <h4>Following: {followingProfiles.length}</h4>
               <hr />
               <Following following={followingProfiles} />

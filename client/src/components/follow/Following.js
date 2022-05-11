@@ -29,7 +29,7 @@ const Following = (props) => {
       following.push(
         <div key={users[i].id} className="d-flex">
             <div style={{width:50, marginBottom: 'auto'}}><ProfilePic picture={users[i].pictureURL}/></div> 
-            <h4 className=''>{users[i].name}</h4>
+            <h4 style={{width: '70%'}}>{users[i].name}</h4>
             <button type="button" className="btn btn-sm btn-secondary pull-right float-right" style={{marginLeft: 'auto', marginRight: 3, marginBottom: 7}} 
             value={users[i].id} onClick={handleFollow}><i className="fa fa-close-round"></i>Unfollow</button>
         </div>

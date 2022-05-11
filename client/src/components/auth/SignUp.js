@@ -22,7 +22,7 @@ const SignUp = () => {
         await doRequest()
     }
     return (
-        <div>
+        <div style={{width: '30%', justifyContent: 'center', marginLeft: '35%', padding: 5, marginTop: '5%'}} className='border border-primary rounded'>
             <form onSubmit={onSubmit}>
                 <h1>Sign Up</h1>
                 <div className="form-group">

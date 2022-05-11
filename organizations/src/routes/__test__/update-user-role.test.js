@@ -97,7 +97,9 @@ it('moderator tries to touch admin returs 401', async () => {
             userId: userAdmin.id,
             role: 'USER'
         })
-        .expect(401);
+        .expect(400);
+
+    expect(response.body.errors[0].message).toEqual('Moderator cannot touch admins')
 });
 
 it('moderator tries to promote user to admin returs 401', async () => {
@@ -115,7 +117,8 @@ it('moderator tries to promote user to admin returs 401', async () => {
             userId: user.id,
             role: 'ADMIN'
         })
-        .expect(401);
+        .expect(400);
+    expect(response.body.errors[0].message).toEqual('Moderator cannot promote user to admin')
 });
 
 it('moderator successfully promotes user to mod', async () => {

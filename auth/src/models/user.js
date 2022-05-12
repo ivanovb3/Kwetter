@@ -1,9 +1,10 @@
 import mongoose from "mongoose";
+import { Encrypt } from "../services/encrypt.js";
 import { Password } from "../services/password.js";
 
 const userSchema = new mongoose.Schema({
     email: {
-        type: String,
+        type: Object,
         required: true
     },
     password: {
@@ -26,6 +27,13 @@ userSchema.pre('save', async function(done) {
         const hashed = await Password.toHash(this.get('password'));
         this.set('password', hashed);
     }
+    if(this.isModified('email')){
+        const encrypted = Encrypt.encrypt(this.get('email'));
+        this.set('email', encrypted)
+        //this.get('email')
+    }
+    
+
     done();
 })
 

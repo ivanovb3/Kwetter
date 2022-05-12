@@ -1,5 +1,6 @@
 import request from 'supertest';
 import { app } from '../../app.js'
+import { Encrypt } from '../../services/encrypt.js';
 import { getAuthCookie } from '../../test/auth-helper.js';
 
 it('responds with details about the current user', async () => {
@@ -12,7 +13,9 @@ it('responds with details about the current user', async () => {
         .send()
         .expect(200);
 
-    expect(response.body.currentUser.email).toEqual('test@test.com')
+    const decrypted = Encrypt.decrypt(response.body.currentUser.email)
+
+    expect(decrypted).toEqual('test@test.com')
 });
 
 it('responds with null if not authenticated', async () => {

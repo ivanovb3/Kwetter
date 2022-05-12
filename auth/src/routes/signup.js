@@ -16,7 +16,7 @@ router.post('/api/users/signup', [
 
         const { email, password } = req.body
         const encryptedEmail = Encrypt.encrypt(email)
-        const existingUser = await User.findOne({encryptedEmail});
+        const existingUser = await User.findOne({email: encryptedEmail});
 
         if (existingUser) {
             const error =  new Error('Email is in use')
@@ -25,6 +25,7 @@ router.post('/api/users/signup', [
         }
 
         const user = new User({email, password});
+        
         await user.save();
 
         await new Publisher(natsWrapper.client, 'user:created').publish({   
@@ -34,8 +35,7 @@ router.post('/api/users/signup', [
 
         //Generate JWT 
         const userJwt = jwt.sign({
-            id: user.id,
-            email: user.email
+            id: user.id
         }, process.env.JWT_KEY);
 
         //Store it on session object

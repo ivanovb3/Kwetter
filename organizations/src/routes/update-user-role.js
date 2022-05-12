@@ -46,7 +46,9 @@ router.post('/api/organizations/newRole', requireAuth, [
         return res.status(200).send(user);
     }
 
-    return res.sendStatus(401).send('User unauthorized');
+    const error = new Error('User unauthorized');
+    error.reasons = [{ msg: "User unauthorized", param: 'modify' }];
+    throw error;
 })
 
 router.post('/api/organizations/initial', requireAuth, [

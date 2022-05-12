@@ -23,7 +23,7 @@ router.post('/api/users/signin', [
 
         const encryptedEmail = Encrypt.encrypt(email)
 
-        const existingUser = await User.findOne({ encryptedEmail })
+        const existingUser = await User.findOne({ email: encryptedEmail })
         if (!existingUser) {
             const error = new Error('User does not exist');
             error.reasons = [{ msg: "User does not exist", param: 'email' }];
@@ -40,8 +40,7 @@ router.post('/api/users/signin', [
 
         //Generate JWT 
         const userJwt = jwt.sign({
-            id: existingUser.id,
-            email: existingUser.email
+            id: existingUser.id
         }, process.env.JWT_KEY);
 
         //Store it on session object

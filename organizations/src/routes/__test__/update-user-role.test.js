@@ -174,5 +174,6 @@ it('user trying to update is unauthorized', async () => {
             userId: userAdmin.id,
             role: 'USER'
         })
-        .expect(401);
+        .expect(400);
+    expect(response.body.errors[0].message).toEqual('User unauthorized')
 });

@@ -126,5 +126,6 @@ it('user trying to delete is unauthorized', async () => {
         .send({
             userId: userAdmin.id
         })
-        .expect(401);
+        .expect(400);
+    expect(response.body.errors[0].message).toEqual('User unauthorized')
 });

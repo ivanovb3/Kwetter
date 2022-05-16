@@ -6,15 +6,15 @@ const iv = crypto.randomBytes(16);
 
 export class Encrypt {
     static encrypt(text) {
-        let cipher = crypto.createCipheriv("AES-256-GCM", key, iv)//crypto.createCipheriv('aes-256-cbc', Buffer.from(key), iv);
+        let cipher = crypto.createCipheriv("AES-256-GCM", key, iv)
         let encrypted = cipher.update(text);
         encrypted = Buffer.concat([encrypted, cipher.final()]);
         return { iv: iv.toString('hex'), encryptedData: encrypted.toString('hex') };
     }
     static decrypt(text) {
-        let iv = Buffer.from(text.iv, 'hex');
+        let ivDec = Buffer.from(text.iv, 'hex');
         let encryptedText = Buffer.from(text.encryptedData, 'hex');
-        let decipher = crypto.createDecipheriv('aes-256-cbc', Buffer.from(key), iv);
+        let decipher = crypto.createDecipheriv('aes-256-cbc', Buffer.from(key), ivDec);
         let decrypted = decipher.update(encryptedText);
         decrypted = Buffer.concat([decrypted, decipher.final()]);
         return decrypted.toString();

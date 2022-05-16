@@ -13,9 +13,7 @@ it('responds with details about the current user', async () => {
         .send()
         .expect(200);
 
-    const decrypted = Encrypt.decrypt(response.body.currentUser.email)
-
-    expect(decrypted).toEqual('test@test.com')
+    expect(response.body.currentUser).not.toEqual(null)
 });
 
 it('responds with null if not authenticated', async () => {

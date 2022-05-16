@@ -4,6 +4,7 @@ import { User } from '../models/user.js';
 import { validateRequest, Publisher } from '@rikwetter/common';
 import jwt from 'jsonwebtoken'
 import { natsWrapper } from '../nats-wrapper.js';
+import { Encrypt } from '../services/encrypt.js';
 
 const router = express.Router();
 
@@ -14,7 +15,8 @@ router.post('/api/users/signup', [
     async (req, res) => {
 
         const { email, password } = req.body
-        const existingUser = await User.findOne({email});
+        const encryptedEmail = Encrypt.encrypt(email)
+        const existingUser = await User.findOne({email: encryptedEmail});
 
         if (existingUser) {
             const error =  new Error('Email is in use')
@@ -23,6 +25,7 @@ router.post('/api/users/signup', [
         }
 
         const user = new User({email, password});
+        
         await user.save();
 
         await new Publisher(natsWrapper.client, 'user:created').publish({   
@@ -32,8 +35,7 @@ router.post('/api/users/signup', [
 
         //Generate JWT 
         const userJwt = jwt.sign({
-            id: user.id,
-            email: user.email
+            id: user.id
         }, process.env.JWT_KEY);
 
         //Store it on session object

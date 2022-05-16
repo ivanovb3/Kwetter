@@ -41,7 +41,6 @@ router.post('/api/organizations/delete', requireAuth, [
         })    
         return res.status(200).send({});
     }
-
     const error = new Error('User unauthorized');
     error.reasons = [{ msg: "User unauthorized", param: 'delete' }];
     throw error;

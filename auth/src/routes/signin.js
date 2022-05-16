@@ -5,6 +5,7 @@ import jwt from 'jsonwebtoken';
 import { validateRequest } from '@rikwetter/common';
 import { User } from '../models/user.js';
 import { Password } from '../services/password.js';
+import { Encrypt } from '../services/encrypt.js';
 
 const router = express.Router();
 
@@ -20,7 +21,9 @@ router.post('/api/users/signin', [
     async (req, res) => {
         const { email, password } = req.body;
 
-        const existingUser = await User.findOne({ email })
+        const encryptedEmail = Encrypt.encrypt(email)
+
+        const existingUser = await User.findOne({ email: encryptedEmail })
         if (!existingUser) {
             const error = new Error('User does not exist');
             error.reasons = [{ msg: "User does not exist", param: 'email' }];
@@ -37,8 +40,7 @@ router.post('/api/users/signin', [
 
         //Generate JWT 
         const userJwt = jwt.sign({
-            id: existingUser.id,
-            email: existingUser.email
+            id: existingUser.id
         }, process.env.JWT_KEY);
 
         //Store it on session object

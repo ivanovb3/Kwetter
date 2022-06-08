@@ -1,6 +1,8 @@
 # Kwetter
 ## Twitter clone
 
+![Architecture diagram](./architecture diagrams/c3.jpg)
+
 Command to start:
 ```
 skaffold dev 

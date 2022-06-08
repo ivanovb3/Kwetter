@@ -6,28 +6,27 @@ SHOW_PERSON_OUTLINE()
 Person(technical, "Technical Specialist", "Monitors the health of system's services")
 
 Container(thdash, "Technical Health (SWSP) Dashboard", "React", "")
-Container(gateway, "Gateway")
+' Container(gateway, "Gateway")
 
 Container(ths, "Technical Health Service", "DotNet", "Monitors the system functionality")
 Container(sds, "Sensor Data Service", "DotNet", "Stores the Raw Data")
 Container(rds, "Raw Data Service", "DotNet", "Handles the Raw Data from Sensors")
 Container(nats, "Event Bus", "NATS")
-Boundary(c1, "OUT OF GROUP SCOPE") {
-    Container(caredash, "Caregiver Dashboard", "React", "")
-    Person(caregiver, "Caregiver", "Interacts with patients data")
-}
+' Boundary(c1, "OUT OF GROUP SCOPE") {
+'     Container(caredash, "Caregiver Dashboard", "React", "")
+'     Person(caregiver, "Caregiver", "Interacts with patients data")
+' }
 ContainerDb(thdb, "Technical Health DB", "SQL", "Contains logs and other information")
 ContainerDb(sddb, "Sensor Data DB", "SQL", "Contains sensor data")
 ContainerDb(rddb, "Raw Data DB", "SQL", "Contains structured sensor data")
 ContainerDb(ebdb, "Event bus DB", "SQL", "Contains hisotry of messages")
 
-
 Rel(technical, thdash, "Uses")
-Rel(caregiver, caredash, "Uses")
+' Rel(caregiver, caredash, "Uses")
 Rel(thdash, ths, "socket")
-Rel(caredash, gateway, "API calls")
-Rel(gateway, rds, "API calls")
-Rel(gateway, sds, "API calls")
+' Rel(caredash, gateway, "API calls")
+' Rel(gateway, rds, "API calls")
+' Rel(gateway, sds, "API calls")
 Rel(nats, ebdb, "Reads/Writes")
 Rel(nats, ths, "publish/listen")
 Rel(nats, rds, "publish/listen")

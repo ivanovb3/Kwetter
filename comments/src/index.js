@@ -2,6 +2,8 @@ import mongoose from 'mongoose';
 import { app } from './app.js';
 import { natsWrapper } from './nats-wrapper.js';
 import { TweetCreatedListener } from './events/tweet-created-listener.js';
+import { TweetDeletedListener } from './events/tweet-deleted-listener.js';
+import { UserDeletedListener } from './events/user-deleted-listener.js';
 
 const start = async () => {
     if (!process.env.JWT_KEY) {
@@ -23,6 +25,8 @@ const start = async () => {
         process.on('SIGTERM', () => natsWrapper.client.close());
 
         new TweetCreatedListener(natsWrapper.client, 'tweet:created', 'comments-service').listen();
+        new TweetDeletedListener(natsWrapper.client, 'tweet:deleted', 'comments-service').listen();
+        new UserDeletedListener(natsWrapper.client, 'user:deleted', 'comments-service').listen();
 
         await mongoose.connect(process.env.MONGO_URI);
         console.log("Connected to MongoDb comments");

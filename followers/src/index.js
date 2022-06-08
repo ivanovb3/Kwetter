@@ -1,4 +1,5 @@
 import mongoose from 'mongoose';
+import { UserDeletedListener } from './events/user-deleted-listener.js';
 import { app } from './app.js';
 import { UserCreatedListener } from './events/user-created-listener.js';
 import { natsWrapper } from './nats-wrapper.js';
@@ -23,6 +24,7 @@ const start = async () => {
         process.on('SIGTERM', () => natsWrapper.client.close());
 
         new UserCreatedListener(natsWrapper.client, 'user:created', 'followers-service').listen();
+        new UserDeletedListener(natsWrapper.client, 'user:deleted', 'followers-service').listen();
 
         await mongoose.connect(process.env.MONGO_URI);
         console.log("Connected to MongoDb followers");

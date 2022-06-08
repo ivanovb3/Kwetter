@@ -1,5 +1,6 @@
 import mongoose from 'mongoose';
 import { app } from './app.js';
+import { UserDeletedListener } from './events/user-deleted-listener.js';
 import { natsWrapper } from './nats-wrapper.js';
 
 const start = async () => {
@@ -20,6 +21,8 @@ const start = async () => {
 
         process.on('SIGINT', () => natsWrapper.client.close());
         process.on('SIGTERM', () => natsWrapper.client.close());
+
+        new UserDeletedListener(natsWrapper.client, 'user:deleted', 'tweets-service').listen();
 
         await mongoose.connect(process.env.MONGO_URI);
         console.log("Connected to MongoDb tweets");

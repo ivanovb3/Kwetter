@@ -1,5 +1,6 @@
 import mongoose from 'mongoose'
 import { app } from './app.js'
+import { UserDeletedListener } from './events/user-deleted-listener.js';
 import { natsWrapper } from './nats-wrapper.js';
 
 const start = async () => {
@@ -21,10 +22,12 @@ const start = async () => {
     try {
         await natsWrapper.connect(process.env.NATS_CLUSTER_ID, process.env.NATS_CLIENT_ID, process.env.NATS_URL);
 
-        // natsWrapper.client.on('close', () => {
-        //     console.log('NATS connection closed!');
-        //     process.exit();
-        // })
+        natsWrapper.client.on('close', () => {
+            console.log('NATS connection closed!');
+            process.exit();
+        })
+
+        new UserDeletedListener(natsWrapper.client, 'user:deleted', 'auth-service').listen();
 
         process.on('SIGINT', () => natsWrapper.client.close());
         process.on('SIGTERM', () => natsWrapper.client.close());

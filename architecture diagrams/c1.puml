@@ -1,0 +1,25 @@
+@startuml blogging_context
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Container.puml
+
+SHOW_PERSON_OUTLINE()
+
+Person(user, "User", "Regular user who uses the social platform")
+Person(admin, "Administrator", "User resposible for managing other user's roles and accounts")
+Person(moderator, "Moderator", "User responsible for protecting application's regulations")
+
+Container(frontend, "Web Application", "React", "The user intefrace used to share information with other people")
+Container(frontendmods, "Web Application", "React", "The admin and moderator interface used to manage users")
+Boundary(c1, "Microservice system") {
+    Container(backend, "API Gateway", "Node", "Microservice system handles all business logic")
+}
+ContainerDb(usersdb, "Database", "MySQL", "Contains records")
+
+Rel(user, frontend, "Uses")
+Rel(admin, frontendmods, "Uses")
+Rel(moderator, frontendmods, "Uses")
+Rel(frontendmods, backend, "Uses", "HTTPS/JSON")
+Rel(frontend, backend, "Uses", "HTTPS/JSON")
+Rel(backend, usersdb, "Reads/Writes")
+
+SHOW_LEGEND()
+@enduml

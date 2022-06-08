@@ -28,8 +28,8 @@ router.post('/api/organizations/delete', requireAuth, [
             await new Publisher(natsWrapper.client, 'user:deleted').publish({   
                 id: userId                
             })
-            await UserOrganizations.deleteOne({_id: userId})
-            console.log(`User of id: ${userId} should be deleted`);
+            //await UserOrganizations.deleteOne({_id: userId})
+            //console.log(`User of id: ${userId} should be deleted`);
             return res.status(200).send({});
         }
         //return res.sendStatus(401).send('Moderator cannot delete another user of same or higher rank');
@@ -41,8 +41,8 @@ router.post('/api/organizations/delete', requireAuth, [
         await new Publisher(natsWrapper.client, 'user:deleted').publish({   
             id: userId                
         })
-        await UserOrganizations.deleteOne({_id: userId});
-        console.log(`User of id: ${userId} should be deleted`);   
+        //await UserOrganizations.deleteOne({_id: userId});
+        //console.log(`User of id: ${userId} should be deleted`);   
         return res.status(200).send({});
     }
     const error = new Error('User unauthorized');

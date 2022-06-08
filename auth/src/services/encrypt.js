@@ -6,7 +6,7 @@ const iv = crypto.randomBytes(16);
 
 export class Encrypt {
     static encrypt(text) {
-        let cipher = crypto.createCipheriv("AES-256-GCM", key, iv)
+        let cipher = crypto.createCipheriv("aes-256-cbc", key, iv)  //AES-256-GCM
         let encrypted = cipher.update(text);
         encrypted = Buffer.concat([encrypted, cipher.final()]);
         return { iv: iv.toString('hex'), encryptedData: encrypted.toString('hex') };

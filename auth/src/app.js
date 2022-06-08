@@ -9,6 +9,7 @@ import { signinRouter } from './routes/signin.js';
 import { signoutRouter } from './routes/signout.js';
 import { signupRouter } from './routes/signup.js';
 import { errorHandler } from '@rikwetter/common';
+import { forgetMeRouter } from './routes/forget-user.js';
 
 const app = express();
 // app.disable("x-powered-by");
@@ -27,6 +28,7 @@ app.use(currentUserRouter);
 app.use(signinRouter);
 app.use(signoutRouter);
 app.use(signupRouter);
+app.use(forgetMeRouter);
 
 app.use(errorHandler);
 

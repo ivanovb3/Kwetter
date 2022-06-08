@@ -1,6 +1,7 @@
 import mongoose from 'mongoose';
 import { app } from './app.js';
 import { UserCreatedListener } from './events/user-created-listener.js';
+import { UserDeletedListener } from './events/user-deleted-listener.js';
 import { natsWrapper } from './nats-wrapper.js';
 
 const start = async () => {
@@ -23,6 +24,7 @@ const start = async () => {
         process.on('SIGTERM', () => natsWrapper.client.close());
 
         new UserCreatedListener(natsWrapper.client, 'user:created', 'organizations-service').listen();
+        new UserDeletedListener(natsWrapper.client, 'user:deleted', 'organizations-service').listen();
 
         await mongoose.connect(process.env.MONGO_URI);
         console.log("Connected to MongoDb organizations");

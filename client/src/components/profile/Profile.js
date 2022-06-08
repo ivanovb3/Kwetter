@@ -6,6 +6,7 @@ import useRequest from '../../hooks/use-request'
 import {ProfilePagePic} from './ProfilePic'
 import UpdateProfile from './UpdateProfile'
 import UploadProfilePic from './UploadProfilePic'
+import ForgetMe from './ForgetMeButton'
 
 const Profile = () => {
   const [user, setUser] = useState('')
@@ -38,6 +39,7 @@ const Profile = () => {
       {user.id === userProfile.id ? <div>
         <UpdateProfile name={userProfile.name} bio={userProfile.bio} /> <br/> 
         <UploadProfilePic />
+        <ForgetMe id={user.id}/>
         </div> : null}
     </div>
   )

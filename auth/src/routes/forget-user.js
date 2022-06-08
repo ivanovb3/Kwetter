@@ -1,7 +1,6 @@
 import express from 'express'
 import { validateRequest, Publisher, currentUser } from '@rikwetter/common';
 import { natsWrapper } from '../nats-wrapper.js';
-import crypto from 'crypto'
 
 const router = express.Router();
 

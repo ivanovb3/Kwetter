@@ -1,7 +1,7 @@
 # Kwetter
 ## Twitter clone
 
-![Architecture diagram](./architecture diagrams/c3.jpg)
+![Architecture diagram](https://github.com/ivanovb3/Kwetter/blob/master/architecture diagrams/c3.jpg?raw=true)
 
 Command to start:
 ```

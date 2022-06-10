@@ -1,23 +1,23 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: auth-depl
+  name: followers-depl
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: auth
+      app: followers
   template:
     metadata:
       labels:
-        app: auth
+        app: followers
     spec:
       containers:
-        - name: auth
-          image: ivanovb3/auth
+        - name: followers
+          image: kwetterdeploymentacr.azurecr.io/followers
           env:
             - name: MONGO_URI
-              value: 'mongodb://auth-mongo-srv:27017/auth'
+              value: 'mongodb://followers-mongo-srv:27017/followers'
             - name: JWT_KEY
               valueFrom:  
                 secretKeyRef:
@@ -31,41 +31,17 @@ spec:
               valueFrom:
                 fieldRef:
                   fieldPath: metadata.name
+
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: auth-srv
+  name: followers-srv
 spec:
   selector:
-    app: auth
+    app: followers
   ports:
-    - name: auth
+    - name: followers
       protocol: TCP
       port: 4000
       targetPort: 4000
----
-apiVersion: autoscaling/v2beta2
-kind: HorizontalPodAutoscaler
-metadata:
-  name: auth-hpa
-spec:
-  scaleTargetRef:
-    apiVersion: apps/v1
-    kind: Deployment
-    name: auth-depl
-  minReplicas: 1
-  maxReplicas: 5
-  metrics:
-  - type: Resource
-    resource:
-      name: cpu
-      target:
-        type: Utilization
-        averageUtilization: 75
-  - type: Resource
-    resource:
-      name: memory
-      target:
-        type: AverageValue
-        averageValue: 400Mi

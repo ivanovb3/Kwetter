@@ -1,0 +1,49 @@
+.followersText{
+    color: #fff !important;
+    font-size: 1rem;
+    margin-top: 10px;
+    margin-left: 5px;
+}
+.followButton{
+    padding: 0;
+    border: none;
+    background: none;
+    background-color: #fff;
+    color: #16151c;
+    margin-left: auto;
+    margin-bottom: 7px;
+    margin-right: 3px;
+    float: right;
+    padding: 0.25rem 0.5rem; 
+    font-size: 1rem;
+    border-radius: 0.4rem;
+    border-color: #fff;
+    transition: background-color 0.5s ease;
+}
+.followButton:hover{
+    background-color: #c8c4d5;
+    border-color: #c8c4d5;
+}
+.unfollowButton{
+    padding: 0;
+    border: none;
+    background: none;
+    background-color: #47425b;
+    color: #fff;
+    margin-left: auto;
+    margin-bottom: 7px;
+    margin-right: 3px;
+    float: right;
+    padding: 0.25rem 0.5rem; 
+    font-size: 1rem;
+    border-radius: 0.4rem;
+    border-color: #47425b;
+    transition: background-color 0.5s ease;
+}
+.unfollowButton:hover{
+    background-color: #332f41;
+    border-color: #332f41;
+}
+.followerLink:hover{
+    background-color: #4d4960;
+}

@@ -1,5 +1,6 @@
 import axios from 'axios'
 import React, { useState } from 'react'
+import '../../styles/Profile.css'
 
 const UploadProfilePic = () => {
 
@@ -19,7 +20,7 @@ const UploadProfilePic = () => {
 
     }
 
-    const fileData = file ? <div>
+    const fileData = file ? <div className='explanationsProfile'>
         <h4>File Details:</h4>
         <p>File Name: {file.name}</p>
         <p>File Type: {file.type}</p>
@@ -29,13 +30,13 @@ const UploadProfilePic = () => {
     return (
         <div>
             <form onSubmit={handleUpload}>
-                <div className="form-group">
-                    <label htmlFor="exampleFormControlFile1">Choose a profile picture</label>
-                    <input type="file" className="form-control-file" id="exampleFormControlFile1" onChange={onFileChange} />
-                    <button type="submit" className="btn btn-primary" >Upload</button> 
+                <div className="form-group explanationsProfile">
+                    <input type="file" id="exampleFormControlFile1" onChange={onFileChange} hidden/>
+                    <label htmlFor="exampleFormControlFile1"  className="uploadPicture">Choose a profile picture</label>
+                    {fileData}
+                    <button type="submit" className="btn btn-primary" >Upload picture</button> 
                 </div>
-            </form>
-            {fileData}
+            </form>            
         </div>
     )
 }

@@ -3,6 +3,7 @@ import getCurrentUser from '../../hooks/get-current-user'
 import NavBar from '../NavBar'
 import customRequest from '../../hooks/custom-request'
 import ModerateForm from './ModerateForm'
+import '../../styles/Moderate.css'
 // import useRequest from '../../hooks/use-request'
 // import { ProfilePagePic } from './ProfilePic'
 
@@ -22,7 +23,7 @@ const Moderate = () => {
             await doCustomGetRequest('/api/organizations/get').then(async (resultUsers) => {
                 setAllUsersRoles(resultUsers);
                 let ids = []
-                for(let i=0;i<resultUsers.length; i++){
+                for (let i = 0; i < resultUsers.length; i++) {
                     ids.push(resultUsers[i].id)
                 }
                 await doCustomPostRequest('/api/profiles/get', { userIds: ids }).then(result => setAllUsers(result))
@@ -34,10 +35,12 @@ const Moderate = () => {
 
 
     return (
-        <div>
-            <NavBar user={user} />  
-            <h2>Moderator page</h2> 
-            <ModerateForm allUsers={allUsers} allUsersRoles={allUsersRoles} />         
+        <div className='wrapperMod'>
+            <NavBar user={user} />
+            <div className='modContent'>
+                <h2 className='explanationsProfile'>Moderator page</h2>
+                <ModerateForm allUsers={allUsers} allUsersRoles={allUsersRoles} />
+            </div>
         </div>
     )
 }

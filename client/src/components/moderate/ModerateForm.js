@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { ProfilePic } from '../profile/ProfilePic'
 import axios from 'axios'
+import '../../styles/Moderate.css'
 
 const ModerateForm = (props) => {
 
@@ -48,7 +49,7 @@ const ModerateForm = (props) => {
             moderateDiv.push(
                 <div key={allUsers[i].id} className="d-flex p-3" style={{ marginTop: 15 }}>
                     <div style={{ width: 50, marginBottom: 'auto' }}><ProfilePic picture={allUsers[i].pictureURL} /></div>
-                    <h4 className='float-left' style={{ marginRigth: 'auto', marginBottom: 'auto', marginRight: '2%', width: '20%' }}>{allUsers[i].name}: {role}</h4>
+                    <h4 className='float-left explanationsProfile' style={{ marginRigth: 'auto', marginBottom: 'auto', marginRight: '2%', width: '20%' }}>{allUsers[i].name}: {role}</h4>
                     <select className="custom-select"  onChange={handleChange}>
                         <option defaultValue="">Choose role</option>
                         <option value="USER">User</option>

@@ -7,6 +7,7 @@ import Followers from './follow/Followers'
 import NewTweetForm from './tweet/NewTweetForm'
 import Tweet from './tweet/Tweet'
 import Following from './follow/Following'
+import '../styles/Home.css'
 
 const Home = () => {
   const [user, setUser] = useState('')
@@ -41,7 +42,7 @@ const Home = () => {
               setComments(resultComments)
               let commentIds = []
               for (const r of resultComments) {
-               commentIds.push(r.id)
+                commentIds.push(r.id)
               }
               await doCustomPostRequest('/api/reacts/get', { contentIds: commentIds.concat(tweetIds) }).then(resultReacts => setReacts(resultReacts))
             })
@@ -66,38 +67,86 @@ const Home = () => {
   }, []);
 
   return (
-    <div>
+    <div className='wrapperHome'>
       <NavBar user={role} />
-      <div className="container">
-        <div className="row">
-          <div className="col-sm">
-            <div className='border border-secondary rounded'>
-              <h4>Followers: {followersProfiles.length}</h4>
-              <hr />
-              <Followers followers={followersProfiles} />
-            </div>
-            <div className='border border-secondary rounded' style={{marginTop: '4%'}}>
-              <h4>Following: {followingProfiles.length}</h4>
-              <hr />
-              <Following following={followingProfiles} />
-            </div>
-          </div>
-          <div className="col-sm">
-            Home of {user.name}
-            <NewTweetForm />
-            <Tweet tweets={tweets} users={followingProfiles.concat(user)} restUsers={explore} comments={comments} reacts={reacts} currentUser={user} />
-          </div>
-          <div className="col-sm">
-            <div className='border border-secondary rounded'>
-              <h4>Who to follow</h4>
-              <hr />
-              <Recommended explore={explore} />
-            </div>
-          </div>
+      <div className="wrapperMiddle">
+        <div className='middleContent'>
+          <div className='homeText'>Home of {user.name}</div>
+          <NewTweetForm />
+          <Tweet tweets={tweets} users={followingProfiles.concat(user)} restUsers={explore} comments={comments} reacts={reacts} currentUser={user} />
         </div>
+      </div>
+      <div className="wrapperRight">
+        <div className='wrapperFollowers'>
+          <h4 className='explanationsHome'>Who to follow</h4>
+          <hr />
+          <Recommended explore={explore} />
+        </div>
+        {/* This is new */}
+        <div className='wrapperFollowers'>
+          <h4 className='explanationsHome'>Followers: {followersProfiles.length}</h4>
+          <hr />
+          <Followers followers={followersProfiles} />
+        </div>
+        <div className='wrapperFollowers' style={{ marginTop: '4%' }}>
+          <h4 className='explanationsHome'>Following: {followingProfiles.length}</h4>
+          <hr />
+          <Following following={followingProfiles} />
+        </div>
+        {/* ---------------- */}
       </div>
     </div>
   )
 }
 
 export default Home  
+
+{/* <div className="col-sm">
+            <div className='wrapperFollowers'>
+              <h4 className='explanationsHome'>Followers: {followersProfiles.length}</h4>
+              <hr />
+              <Followers followers={followersProfiles} />
+            </div>
+            <div className='wrapperFollowers' style={{ marginTop: '4%' }}>
+              <h4 className='explanationsHome'>Following: {followingProfiles.length}</h4>
+              <hr />
+              <Following following={followingProfiles} />
+            </div>
+          </div> */}
+
+
+
+
+
+
+
+
+{/* <div className='wrapperHome'>
+      <NavBar user={role} />
+      <div className="container">
+        <div className="row">          
+          <div className="col-sm wrapperMiddle">
+            <div className='homeText'>Home of {user.name}</div>
+            <NewTweetForm />
+            <Tweet tweets={tweets} users={followingProfiles.concat(user)} restUsers={explore} comments={comments} reacts={reacts} currentUser={user} />
+          </div>
+          <div className="col-sm wrapperRight">
+            <div className='wrapperFollowers'>
+              <h4 className='explanationsHome'>Who to follow</h4>
+              <hr />
+              <Recommended explore={explore} />
+            </div>
+            <div className='wrapperFollowers'>
+              <h4 className='explanationsHome'>Followers: {followersProfiles.length}</h4>
+              <hr />
+              <Followers followers={followersProfiles} />
+            </div>
+            <div className='wrapperFollowers' style={{ marginTop: '4%' }}>
+              <h4 className='explanationsHome'>Following: {followingProfiles.length}</h4>
+              <hr />
+              <Following following={followingProfiles} />
+            </div>
+          </div>
+        </div>
+      </div>
+    </div> */}

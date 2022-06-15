@@ -2,6 +2,7 @@ import React from 'react'
 import HeartReact from './HeartReact'
 import { timeSince } from '../../utils/timeSince'
 import { ProfilePic } from '../profile/ProfilePic'
+import '../../styles/Tweet.css'
 
 const Comment = (props) => {
     let comments = []
@@ -29,10 +30,10 @@ const Comment = (props) => {
                     <div style={{ width: 50, float: 'left' }}><ProfilePic picture={user.pictureURL} /></div>
                     <div style={{ marginLeft: 53 }}>
                         <div className='d-flex'>
-                            {user.name} <div className='text-muted float-right' style={{ marginLeft: 'auto' }}>{timeSince(comments[i].createdAt)}</div>
+                            <div className='tweetContent'>{user.name}</div> <div className='text-muted float-right' style={{ marginLeft: 'auto' }}>{timeSince(comments[i].createdAt)}</div>
                         </div>
                         <div className='text-muted float-left' style={{ marginRight: 'auto' }}>Replying to {tweeter.name}</div>
-                        {comments[i].content} <br />
+                        <div className='tweetContent'>{comments[i].content}</div> <br />
                         <HeartReact reacts={reacts} userId={currentUser.id} contentId={comments[i].id} />
                     </div>
                 </div>

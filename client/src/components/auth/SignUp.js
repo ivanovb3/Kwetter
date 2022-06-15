@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import useRequest from '../../hooks/use-request'
+import '../../styles/SignIn.css'
 
 const SignUp = () => {
 
@@ -13,7 +14,7 @@ const SignUp = () => {
         body: {
             email, password
         },
-        onSuccess: (response) => {navigate(`/profile/${response}`)}
+        onSuccess: (response) => { navigate(`/profile/${response}`) }
     })
 
     const onSubmit = async (e) => {
@@ -22,28 +23,29 @@ const SignUp = () => {
         await doRequest()
     }
     return (
-        <div style={{width: '30%', justifyContent: 'center', marginLeft: '35%', padding: 5, marginTop: '5%'}} className='border border-primary rounded'>
-            <form onSubmit={onSubmit}>
-                <h1>Sign Up</h1>
-                <div className="form-group">
-                    <label htmlFor="exampleInputEmail1">Email address</label>
-                    <input type="email" className="form-control" id="exampleInputEmail1"
-                        aria-describedby="emailHelp" placeholder="Email address"
-                        value={email} onChange={(e) => setEmail(e.target.value)} />
-                </div>
-                <div className="form-group mt-3">
-                    <label htmlFor="exampleInputPassword1">Password</label>
-                    <input type="password" className="form-control" id="exampleInputPassword1"
-                        placeholder="Password" value={password}
-                        onChange={(e) => setPassword(e.target.value)} />
-                </div>
-                {errors}
-                {/* {errors.length > 0 && { errors }} */}
-                <button type="submit" className="btn btn-primary mt-3">Sign Up</button>
-            </form>
-            <div>
-                <h3>Already have an accout?</h3>
-                <Link to='/login'>Sign in</Link>
+        <div className='wrapper'>
+            <div className='wrapperBox'>
+                <form onSubmit={onSubmit}>
+                    <h1 className='explanations'>Sign Up</h1>
+                    <div className="form-group">
+                        <label htmlFor="exampleInputEmail1" className='explanations'>Email address</label>
+                        <input type="email" className="form-control" id="exampleInputEmail1"
+                            aria-describedby="emailHelp" placeholder="Email address"
+                            value={email} onChange={(e) => setEmail(e.target.value)} />
+                    </div>
+                    <div className="form-group mt-3">
+                        <label htmlFor="exampleInputPassword1" className='explanations'>Password</label>
+                        <input type="password" className="form-control" id="exampleInputPassword1"
+                            placeholder="Password" value={password}
+                            onChange={(e) => setPassword(e.target.value)} />
+                    </div>
+                    {errors}
+                    <button type="submit" className="btn btn-primary mt-3">Sign Up</button>
+                </form>
+                <span>
+                    <h3 className='explanations signInTextAndLink' >Already have an accout?</h3>
+                    <Link to='/login' className='signInLink signInTextAndLink'>Sign in</Link>
+                </span>
             </div>
         </div>
     )

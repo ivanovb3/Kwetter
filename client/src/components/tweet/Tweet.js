@@ -4,6 +4,8 @@ import Comment from './Comment'
 import HeartReact from './HeartReact'
 import { timeSince } from '../../utils/timeSince'
 import { ProfilePic } from '../profile/ProfilePic'
+import '../../styles/Tweet.css'
+import CommentsCount from './CommentCount'
 
 const Tweet = (props) => {
 
@@ -31,13 +33,16 @@ const Tweet = (props) => {
             tweetsDiv.push(
                 <div key={tweets[i].id} className='border border-secondary p-2'>
                     <div className='mb-3'>
-                        <div style={{width: 50, float: 'left'}}><ProfilePic picture={user.pictureURL} /></div>
-                        <div style={{marginLeft: 53}}>
+                        <div style={{ width: 50, float: 'left' }}><ProfilePic picture={user.pictureURL} /></div>
+                        <div style={{ marginLeft: 53 }}>
                             <div className='d-flex'>
-                                <h6>{user.name}</h6> <div className='text-muted float-right' style={{ marginLeft: 'auto' }}>{timeSince(tweets[i].createdAt)}</div>
+                                <h6 className='tweetContent'>{user.name}</h6> <div className='text-muted float-right' style={{ marginLeft: 'auto' }}>{timeSince(tweets[i].createdAt)}</div>
                             </div>
-                            {tweets[i].content} <br />
-                            <HeartReact reacts={reacts} userId={currentUser.id} contentId={tweets[i].id} />
+                            <div className='tweetContent'>{tweets[i].content}</div> <br />
+                            <div className='d-flex'>
+                                <HeartReact reacts={reacts} userId={currentUser.id} contentId={tweets[i].id} /> &nbsp;&nbsp;
+                                <CommentsCount comments={commentsTweet.length} />
+                            </div>
                         </div>
                     </div>
                     <NewCommentForm tweetId={tweets[i].id} />

@@ -1,0 +1,16 @@
+.wrapperMod{
+    background-color: #16151c;
+    position:fixed;
+    width:100%;
+    height:100%;
+    display:flex;
+}
+.explanationsProfile{
+    color: white;
+}
+.modContent{
+    margin-top: 2%;
+    margin-right: 10%;
+    width:80%;
+    height:100%; 
+}

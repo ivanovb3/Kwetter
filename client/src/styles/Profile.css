@@ -1,0 +1,36 @@
+.wrapperProfile{
+    background-color: #16151c;
+    position:fixed;
+    width:100%;
+    height:100%;
+    display:flex;
+    overflow: auto;
+}
+.wrapperProfile::-webkit-scrollbar { 
+    display: none;  /* Safari and Chrome */
+}
+.explanationsProfile{
+    color: white;
+}
+.contentProfile{
+    margin-top: 2%;
+}
+.updateProfileForm{
+    margin-top: 2%;
+    border-style: dotted;
+    border-color: #58546C;
+    border-radius: 1.5rem;
+    padding: 2rem;
+}
+.updateProfileButton{
+    margin-top: 1%;
+}
+.uploadPicture {
+    background-color: indigo;
+    color: white;
+    padding: 0.5rem;
+    font-family: sans-serif;
+    border-radius: 0.3rem;
+    cursor: pointer;
+    margin-top: 1rem;
+  }

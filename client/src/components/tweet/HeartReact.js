@@ -1,6 +1,7 @@
 import React from 'react'
 import { FaHeart, FaRegHeart } from "react-icons/fa"
 import useRequest from '../../hooks/use-request'
+import '../../styles/Tweet.css'
 
 const HeartReact = (props) => {
     let reacts = []
@@ -34,7 +35,7 @@ const HeartReact = (props) => {
     let heartReact = isLiked ? <FaHeart onClick={handleReact}/> : <FaRegHeart onClick={handleReact}/>
 
   return (
-    <div className=''>{heartReact} {reactContent.reacts.length}</div>
+    <div className='tweetContent'>{heartReact} {reactContent.reacts.length}</div>
   )
 }
 

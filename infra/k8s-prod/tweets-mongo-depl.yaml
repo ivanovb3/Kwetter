@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: tweets-mongo-depl
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: tweets-mongo
+  template:
+    metadata:
+      labels:
+        app: tweets-mongo
+    spec:
+      containers: 
+        - name: tweets-mongo
+          image: mongo
+---
+apiVersion: v1
+kind: Service
+metadata: 
+  name: tweets-mongo-srv 
+spec:
+  selector:
+    app: tweets-mongo
+  ports:
+    - name: tweets-db
+      protocol: TCP
+      port: 27017
+      targetPort: 27017

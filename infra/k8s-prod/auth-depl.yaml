@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: auth
-          image: ivanovb3/auth
+          image: kwetterdeploymentacr.azurecr.io/auth
           env:
             - name: MONGO_URI
               value: 'mongodb://auth-mongo-srv:27017/auth'
@@ -44,28 +44,3 @@ spec:
       protocol: TCP
       port: 4000
       targetPort: 4000
----
-apiVersion: autoscaling/v2beta2
-kind: HorizontalPodAutoscaler
-metadata:
-  name: auth-hpa
-spec:
-  scaleTargetRef:
-    apiVersion: apps/v1
-    kind: Deployment
-    name: auth-depl
-  minReplicas: 1
-  maxReplicas: 5
-  metrics:
-  - type: Resource
-    resource:
-      name: cpu
-      target:
-        type: Utilization
-        averageUtilization: 75
-  - type: Resource
-    resource:
-      name: memory
-      target:
-        type: AverageValue
-        averageValue: 400Mi

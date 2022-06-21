@@ -1,23 +1,23 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: auth-depl
+  name: tweets-depl
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: auth
+      app: tweets
   template:
     metadata:
       labels:
-        app: auth
+        app: tweets
     spec:
       containers:
-        - name: auth
-          image: ivanovb3/auth
+        - name: tweets
+          image: kwetterdeploymentacr.azurecr.io/tweets
           env:
             - name: MONGO_URI
-              value: 'mongodb://auth-mongo-srv:27017/auth'
+              value: 'mongodb://tweets-mongo-srv:27017/tweets'
             - name: JWT_KEY
               valueFrom:  
                 secretKeyRef:
@@ -31,41 +31,17 @@ spec:
               valueFrom:
                 fieldRef:
                   fieldPath: metadata.name
+
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: auth-srv
+  name: tweets-srv
 spec:
   selector:
-    app: auth
+    app: tweets
   ports:
-    - name: auth
+    - name: tweets
       protocol: TCP
       port: 4000
       targetPort: 4000
----
-apiVersion: autoscaling/v2beta2
-kind: HorizontalPodAutoscaler
-metadata:
-  name: auth-hpa
-spec:
-  scaleTargetRef:
-    apiVersion: apps/v1
-    kind: Deployment
-    name: auth-depl
-  minReplicas: 1
-  maxReplicas: 5
-  metrics:
-  - type: Resource
-    resource:
-      name: cpu
-      target:
-        type: Utilization
-        averageUtilization: 75
-  - type: Resource
-    resource:
-      name: memory
-      target:
-        type: AverageValue
-        averageValue: 400Mi

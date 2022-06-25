@@ -30,12 +30,12 @@ const UploadProfilePic = () => {
     return (
         <div>
             <form onSubmit={handleUpload}>
-                <div className="form-group explanationsProfile">
+                <div className="form-group explanationsProfile d-flex">
                     <input type="file" id="exampleFormControlFile1" onChange={onFileChange} hidden/>
                     <label htmlFor="exampleFormControlFile1"  className="uploadPicture">Choose a profile picture</label>
-                    {fileData}
-                    <button type="submit" className="btn btn-primary" >Upload picture</button> 
+                    <button type="submit" className="btn btn-primary uploadPictureButton" >Upload picture</button>
                 </div>
+                {fileData}
             </form>            
         </div>
     )

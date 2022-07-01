@@ -5,6 +5,10 @@ on:
     branches: [ master ]
     paths: 'client/**'
     
+env:
+  REGISTRY_NAME: kwetterDeploymentACR
+  APP_NAME: client
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -23,7 +27,7 @@ jobs:
         id: buildx
         uses: docker/setup-buildx-action@v1
 
-      - name: Build and push
+      - name: Build and push to dockerhub
         uses: docker/build-push-action@v2
         with:
           context: ./comments
@@ -32,3 +36,18 @@ jobs:
 
       - name: Image digest
         run: echo ${{ steps.docker_build.outputs.digest }}
+
+      - name: Connect to Azure Container Registry (ACR)
+        uses: azure/docker-login@v1
+        with:
+          login-server: ${{ env.REGISTRY_NAME }}.azurecr.io
+          username: ${{ secrets.REGISTRY_USERNAME }} 
+          password: ${{ secrets.REGISTRY_PASSWORD }}
+      
+      - name: Container build and push to a Azure Container Registry (ACR)
+        run: |
+          docker build . -t ${{ env.REGISTRY_NAME }}.azurecr.io/${{ env.APP_NAME }}:${{ github.sha }}
+          docker push ${{ env.REGISTRY_NAME }}.azurecr.io/${{ env.APP_NAME }}:${{ github.sha }}
+        working-directory: ./client
+
+
